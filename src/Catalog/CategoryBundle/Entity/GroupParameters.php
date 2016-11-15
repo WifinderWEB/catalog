@@ -1,0 +1,211 @@
+<?php
+
+//src/Catalog/CategoryBundle/Entity/GroupParameters.php
+
+namespace Catalog\CategoryBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * @ORM\Table(name="category_group_parameters")
+ * @ORM\Entity(repositoryClass="Catalog\CategoryBundle\Entity\Repository\GroupParametersRepository")
+ */
+class GroupParameters
+{
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @Assert\NotBlank(message="Please enter title.", groups={"GroupParameters"})
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $title;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $description;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $is_active = true;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Parameter", mappedBy="group", cascade={"remove", "persist"})
+     */
+    protected $parameter;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Catalog\CategoryBundle\Entity\Category", mappedBy="groups")
+     */
+    protected $category;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->parameter = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return '<b>' . $this->getTitle() . '</b>' . ($this->getDescription() ? ' (' . $this->getDescription() .')' : '');
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return GroupParameters
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set is_active
+     *
+     * @param boolean $isActive
+     * @return GroupParameters
+     */
+    public function setIsActive($isActive)
+    {
+        $this->is_active = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get is_active
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->is_active;
+    }
+
+    /**
+     * Add parameter
+     *
+     * @param \Catalog\CategoryBundle\Entity\Parameter $parameter
+     * @return GroupParameters
+     */
+    public function addParameter(\Catalog\CategoryBundle\Entity\Parameter $parameter)
+    {
+        $parameter->setGroup($this);
+        $this->parameter[] = $parameter;
+
+        return $this;
+    }
+
+    /**
+     * Remove parameter
+     *
+     * @param \Catalog\CategoryBundle\Entity\Parameter $parameter
+     */
+    public function removeParameter(\Catalog\CategoryBundle\Entity\Parameter $parameter)
+    {
+        $this->parameter->removeElement($parameter);
+    }
+
+    /**
+     * Get parameter
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParameter()
+    {
+        return $this->parameter;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \Catalog\CategoryBundle\Entity\Category $category
+     * @return GroupParameters
+     */
+    public function addCategory(\Catalog\CategoryBundle\Entity\Category $category)
+    {
+        $this->category[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \Catalog\CategoryBundle\Entity\Category $category
+     */
+    public function removeCategory(\Catalog\CategoryBundle\Entity\Category $category)
+    {
+        $this->category->removeElement($category);
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return GroupParameters
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+}

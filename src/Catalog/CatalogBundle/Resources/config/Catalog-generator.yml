@@ -1,0 +1,101 @@
+generator: admingenerator.generator.doctrine
+params:
+    model: Catalog\CatalogBundle\Entity\Catalog
+    namespace_prefix: Catalog
+    concurrency_lock: ~
+    bundle_name: CatalogBundle
+    pk_requirement: ~
+    fields:
+#        image:
+#            dbType: string
+#            formType: file
+#        big_image:
+#            dbType: string
+#            formType: file
+#        delete_image:
+#            formType: boolean
+#        delete_big_image:
+#            formType: boolean
+#        group_parameters:
+#            dbType: collection
+    object_actions:
+        delete: ~
+    batch_actions:
+        delete: ~
+builders:
+    list:
+        params:
+            title: Каталог
+            display: [id, title, alias, is_active ] 
+            actions:
+                new: ~
+            object_actions:
+                move_up:
+                    label:    Переместить вверх
+                    icon:     icon-chevron-up
+                    route:    Catalog_CatalogBundle_Catalog_move_up
+                    params:
+                        id: "{{Catalog.id}}"
+                move_down:
+                    label:    Переместить вниз
+                    icon:     icon-chevron-down
+                    route:    Catalog_CatalogBundle_Catalog_move_down
+                    params:
+                        id: "{{Catalog.id}}"
+                edit: ~
+                delete: ~
+    filters:
+        params:
+            display: [parent, title, alias, is_active]
+    new:
+        params:
+            title: Новый объект каталога
+            tabs: 
+                Base: 
+                    Base: [ is_active, parent, title, alias ]
+                    Content: [ content ]
+#                Related:
+#                    Related: [ related ]
+#                Category:
+#                    Category: [ category ]
+                SEO: 
+                    Meta data: [ meta ]
+                    More parameters: []
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+    edit:
+        params:
+            title: "Редактировать \"%object%\"|{ %object%: Catalog.title }|"
+            tabs: 
+                Base: 
+                    Base: [ is_active, parent, title, alias ]
+                    Content: [ content ]
+#                Related:
+#                    Related: [ related ]
+#                Category:
+#                    Category: [ category, group_parameters ]
+                SEO: 
+                    Meta data: [ meta ]
+                    More parameters: []
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+                delete: ~
+    show:
+        params:
+            title: "You're viewing the object \"%object%\"|{ %object%: Catalog.title }|"
+            display: [ id, parent, alias, title, description, is_active ]
+            actions:
+                list: ~
+                new: ~
+    actions:
+        params:
+            object_actions:
+                delete: ~
+            batch_actions:
+                delete: ~

@@ -1,0 +1,18 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: catalog
+    database_user: root
+    database_password: fd78rw42
+
+    mailer_transport: gmail
+    mailer_host: null
+    mailer_user: wifinder.develop@gmail.com
+    mailer_mail_from: wifinder.develop@gmail.com
+    mailer_password: fd78rw42
+    mailer_mail_to: dev10@list.ru
+
+    locale: ru
+    secret: ThisTokenIsNotSoSecretChangeIt
+    path_uploads: c:/Home_Server/Apache/htdocs/Catalog/web/uploads

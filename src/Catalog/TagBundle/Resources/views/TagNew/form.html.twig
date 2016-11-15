@@ -1,0 +1,25 @@
+{% extends_admingenerated "CatalogTagBundle:TagNew:form.html.twig" %}
+
+{% render(controller( "CatalogContentBundle:Translate:getToken" ))%}
+
+{% block form_alias %}
+    <div class="generate_btn_block"> 
+        <button type="button" id="main_button_translate" class="btn edit_item btn init_tooltip" data-original-title="Сгенерировать псевдоним из заголовка">
+            <i class="icon-fast-forward"></i>
+        </button>
+        <script type="text/javascript">
+            $().ready(function(){
+                var translate = new TranslateModel();
+                translate.Init({
+                    fromFieldId : 'new_tag_title', 
+                    toFieldId : 'new_tag_alias',
+                    buttonId : 'main_button_translate'
+                });
+                translate.Translate.OnClick();
+            });
+        </script>
+    </div>
+    <div class="generate_alias_block">
+        {{ form_row(form['alias']) }}
+    </div>
+{% endblock form_alias %}

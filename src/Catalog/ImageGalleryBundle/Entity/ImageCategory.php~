@@ -1,0 +1,80 @@
+<?php
+
+//src/Catalog/ImageGalleryBundle/Entity/ImageCategory.php
+
+namespace Catalog\ImageGalleryBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * @ORM\Table(name="image_gallery_category")
+ * @ORM\Entity(repositoryClass="Catalog\ImageGalleryBundle\Entity\Repository\ImageCategoryRepository")
+ * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields="alias", message="Sorry, this alias is already in use.", groups={"imageCategory"})
+ */
+class ImageCategory {
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $sort;
+    
+    /**
+     * @ORM\Column( type="string", length=100, unique=true)
+     * @Assert\NotBlank(message="Please enter alias.", groups={"ImageCategory"})
+     * @Assert\Regex( 
+     *       pattern="/^[a-z,A-Z,\_,\-,0-9]+$/",
+     *       message="Alias can contain only letters, numbers and symbols '_' , '-'.", 
+     *       groups={"ImageCategory"}
+     * )
+     */
+    protected $alias;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $title;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+    
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $is_active = true;
+    
+    /**
+    * @ORM\OneToMany(
+     *   targetEntity="Image", 
+     *   mappedBy="category", 
+     *   cascade={"persist", "remove"})
+    */
+    protected $images;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Catalog\ContentBundle\Entity\Content", mappedBy="image_gallery")
+     */
+    protected $join_content;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->join_content = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+}

@@ -1,0 +1,61 @@
+{% form_theme form.images "CatalogImageGalleryBundle:Template:form.html.twig" %}
+
+{% extends_admingenerated "CatalogImageGalleryBundle:Image_categoryEdit:form.html.twig" %}
+
+{% render(controller( "CatalogContentBundle:Translate:getToken" ))%}
+
+{% block form_alias %}
+    <div class="generate_btn_block"> 
+        <button type="button" id="main_button_translate" class="btn edit_item btn init_tooltip" data-original-title="Сгенерировать псевдоним из заголовка">
+            <i class="icon-fast-forward"></i>
+        </button>
+        <script type="text/javascript">
+            $().ready(function(){
+                var translate = new TranslateModel();
+                translate.Init({
+                    fromFieldId : 'edit_imagecategory_title', 
+                    toFieldId : 'edit_imagecategory_alias',
+                    buttonId : 'main_button_translate'
+                });
+                translate.Translate.OnClick();
+            });
+        </script>
+    </div>
+    <div class="generate_alias_block">
+        {{ form_row(form['alias']) }}
+    </div>
+{% endblock form_alias %}
+
+{% block form_fieldset_Form %}
+<div class="form_block form_fieldset_Form tab-pane">
+    <div class="row-fluid" id="box_image_form">
+
+    </div>
+    <div class="row-fluid">
+        <div class="pull-left btn-toolbar">
+             <button id="add_image" type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i> Новое изображение</button>
+        </div>
+    </div>
+</div>
+{% endblock form_fieldset_Form %}
+
+{% block form_fieldset_Thumbs %}
+    <fieldset class="form_block form_fieldset_Thumbs tab-pane">
+        <legend><span>{% trans from "Admin" %}Thumbs{% endtrans %}</span></legend>
+        <div class="row-fluid">
+            <div class="control-group form_field field_collection field_images" id="list_thumb_images">
+                {% block form_images %}
+                    {{ form_row(form['images']) }}
+                {% endblock form_images %}
+            </div>
+        </div>
+    </fieldset>
+    <script type="text/javascript">
+        $().ready(function(){
+            $('input[type=file]').change(function(){
+                $(this).closest('fieldset').find('.img_edit_box').remove();
+            })
+            FormAction.dublicateTitleForImageGallery();
+        })
+    </script>
+{% endblock form_fieldset_Thumbs %}

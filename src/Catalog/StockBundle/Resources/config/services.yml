@@ -1,0 +1,7 @@
+parameters:
+#    catalog_stock.example.class: Catalog\StockBundle\Example
+
+services:
+#    catalog_stock.example:
+#        class: %catalog_stock.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

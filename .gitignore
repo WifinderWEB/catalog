@@ -1,0 +1,14 @@
+nbproject
+web/bundles
+web/components
+web/uploads/*
+web/assetic
+app/bootstrap*
+app/cache/*
+app/logs/*
+/bin
+logs
+vendor/
+app/config/parameters.yml
+.idea/
+composer.lock

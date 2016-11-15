@@ -1,0 +1,23 @@
+{% extends_admingenerated "CatalogProjectBundle:ProjectList:index.html.twig" %}
+
+{% block body %}    
+    {% block page_title %}
+        <header>
+            <h1>{% trans from "Admin" %}Проекты{% endtrans %}</h1>
+        </header>
+    {% endblock page_title %}
+    <div class="row-fluid">
+        <div class=" span12 ">
+            {% block list_scopes %}
+            {% endblock list_scopes %}
+            {% include "CatalogProjectBundle:ProjectList:results.html.twig" with {  } %}
+        </div>
+
+        {% block filters %}
+            {% include "CatalogProjectBundle:ProjectList:filters.html.twig" with {  } %}
+        {% endblock filters %}
+    </div>
+    <a href="#myModalFilterForm" role="button" data-toggle="modal" class="add_comment btn btn-small btn-primary">
+        <div>Фильтры</div>
+    </a>
+{% endblock body %}

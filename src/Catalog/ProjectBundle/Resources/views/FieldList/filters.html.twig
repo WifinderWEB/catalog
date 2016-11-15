@@ -1,0 +1,43 @@
+{% block list_filters %}
+    <div id="myModalFilterForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">{% trans from "Admingenerator" %}list.filters{% endtrans %}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row-fluid filters-list">
+                <form id="filter_form" action="{{ path("Catalog_ProjectBundle_Field_filters") }}" method="post" {{ form_enctype(form) }}>
+                    <fieldset class="form_block form_fieldset_NONE">
+                        {{ form_errors(form) }}
+                        <div class="control-group">
+                            {{ form_label(form['title'], 'Title'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['title']) }}
+                            </div>
+                            {{ form_errors(form['title']) }}
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form['alias'], 'Alias'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['alias']) }}
+                            </div>
+                            {{ form_errors(form['alias']) }}
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form['is_active'], 'Is active'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['is_active']) }}
+                            </div>
+                            {{ form_errors(form['is_active']) }}
+                        </div>
+                        {{ form_rest(form) }}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer"> 
+            <button form="filter_form" type="submit" class="btn btn-small btn-primary"><i class="icon-search icon-white"></i> {% trans from "Admingenerator" %}list.button.filter{% endtrans %}</button>
+            <button form="filter_form" type="submit" class="btn btn-small" name="reset" value="true"><i class="icon-refresh"></i> {% trans from "Admingenerator" %}list.button.reset{% endtrans %}</button>
+        </div>
+    </div>
+{% endblock list_filters %}

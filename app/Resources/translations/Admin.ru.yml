@@ -1,0 +1,94 @@
+Base: Основное
+Is active: Активен?
+Title: Загаловок
+Alias: Псевдоним
+Anons: Анонс
+Delete image?: Удалить изображение?
+Image: Изображение
+Title image: Заголовок изображения
+Alt image: Aльтернативный текст
+Show editor anons: Активировать визуальный редактор?
+Full Description:   Подробно
+Big image: Изображение
+Show editor content: Активировать визуальный редактор?
+More Fields: Дополнительные поля
+Tags: Теги
+Galleries: Галереи
+Images: Изображения
+Image gallery: Фотогалереи
+Video: Видео
+Video gallery: Видео галереи
+Files: Файлы
+Sale: Продажи
+Price: Цена
+Purchase price: Закупочная
+Retail price: Розничная
+Discount: Скидка (в проценах)
+V a t: Включает НДС ?
+Parameters: Габариты и масса
+Weight: Масса
+Length: Длина
+Width: Ширина
+Height: Высота
+Barcode: Штрихкод
+Stocks: Склады
+Quantity: Всего на складе
+Reserved: Забронировано
+Content: Контент
+Address: Адрес
+Lat: Координата широты
+Lng: Координата долготы
+Created: Время создания
+Updated: Время обновления
+Status: Статус
+Full name: Ф.И.О.
+Last Name: Фамилия
+Middle Name: Отчество
+First Name: Имя
+Country: Страна
+Region: Регион
+City: Город / Населенный пункт
+Street: Улица
+House: Дом
+Room: Квартира
+Phone: Телефон
+Itog: Сумма заказа
+Parent: Родительский раздел
+Related: Связанные товары
+Meta data: Мета данные
+More scripts: Дополнительные скрипты
+More parameters: Дополнительные параметры
+In site map: Добавить в карту сайта
+In robots: Обрабатывать роботом
+In breadcrumbs: Отображать в хлебных крошках
+In menu: Отображать в меню
+Article: Артикль
+Catalogs: Раздел каталога
+Description: Описание
+Thumbs: Иконки
+Sort: Сортировка
+Edit image: Редактировать изображение
+More: Дополнительно
+More Parameters: Дополнительные параметры
+Videos: Видео
+Origin name: Оригинальное название
+File: Файл
+Category: Категория
+Username: Логин
+Last login: Последняя авторизация
+Enabled: Активен?
+Profile: Профиль
+Projects: Проекты
+Field: Тип поля
+Edit field: Редактировать поле
+Default value: Значение по умолчанию
+New field: Новое поле
+Orders: Заказы
+Stock: Склад
+Order: Заказ
+User: Пользователь
+Goods: Товар
+Goods id: ID товара
+Personal data: Персональные данные
+Contacts: Контакты
+Thumb: Иконка

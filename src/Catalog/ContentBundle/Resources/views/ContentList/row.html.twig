@@ -1,0 +1,24 @@
+{% extends_admingenerated "CatalogContentBundle:ContentList:row.html.twig" %}
+
+{% block list_row_content %}
+    <td class="td_integer td_id">
+        {% block list_td_column_id %}{{ Content.id }}{% endblock list_td_column_id %}
+    </td>
+    <td class="td_integer td_article">
+        {% if Content.moreField['article'] is defined %}
+            {{Content.moreField['article']}}
+        {% endif %}
+    </td>
+    <td class="td_string td_title">
+        {% block list_td_column_title %}{{ Content.title }}{% endblock list_td_column_title %}
+    </td>
+    <td class="td_boolean td_is_active">
+        {% block list_td_column_is_active %}
+            {% if Content.isActive %}
+                    <i class="icon-ok"></i>
+            {% else %}
+                    <i class="icon-remove"></i>
+            {% endif %}
+        {% endblock list_td_column_is_active %}
+    </td>
+{% endblock list_row_content %}

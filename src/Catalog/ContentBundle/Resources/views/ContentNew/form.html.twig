@@ -1,0 +1,246 @@
+{% extends_admingenerated "CatalogContentBundle:ContentNew:form.html.twig" %}
+
+{% render(controller( "CatalogContentBundle:Translate:getToken" ))%}
+
+{#{% form_theme form.catalogs "CatalogCatalogBundle:Template:choice.html.twig" %}#}
+
+{% block form_alias %}
+    <div class="generate_btn_block"> 
+        <button type="button" id="main_button_translate" class="btn edit_item btn init_tooltip" data-original-title="Сгенерировать псевдоним из заголовка">
+            <i class="icon-fast-forward"></i>
+        </button>
+        <script type="text/javascript">
+            $().ready(function(){
+                var translate = new TranslateModel();
+                translate.Init({
+                    fromFieldId : 'new_content_title', 
+                    toFieldId : 'new_content_alias',
+                    buttonId : 'main_button_translate'
+                });
+                translate.Translate.OnClick();
+            });
+        </script>
+    </div>
+    <div class="generate_alias_block">
+        {{ form_row(form['alias']) }}
+    </div>
+{% endblock form_alias %}
+
+{% block form_image %}
+    <div class="control-group image">
+        <div class="controls">
+            {% if Content.imagePath %}
+                <div class="row-fluid">
+                    <div class="form_field">
+                        <img class="img-polaroid" style="max-width: 140px; max-height: 140px;" src="{{ asset(Content.getImageWebPath) }}"/>
+                    </div>
+                    <div class="form_field">
+                        {{form_row(form['delete_image'])}}
+                    </div>
+                </div>
+                <br/>
+            {% else %}
+                <div style="display: none">
+                    {{form_row(form['delete_image'])}}
+                </div>
+            {% endif %}
+            <div class="row-fluid">
+                <div class="control-group form_field field_text">
+                     {{ form_row(form['image']) }}
+                </div>
+                <div class="control-group form_field field_text">
+                     {{ form_row(form['title_image']) }}
+                </div>
+                <div class="control-group form_field field_text">
+                     {{ form_row(form['alt_image']) }}
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $().ready(function() {
+                FormAction.dublicateTitleForImage();
+            });
+        </script>
+    </div>
+{% endblock form_image %} 
+
+{% block form_big_image %}
+    <div class="control-group big_image">
+        <div class="controls"> 
+            {% if Content.bigImagePath %}
+                <div class="row-fluid">
+                    <div class="form_field">
+                        <img class="img-polaroid" style="max-width: 140px; max-height: 140px;" src="{{ asset(Content.getBigImageWebPath) }}"/>
+                    </div>
+                    <div class="form_field">
+                        {{form_row(form['delete_big_image'])}}
+                    </div>
+                </div>
+                <br/>
+            {% else %}
+                <div style="display: none">
+                    {{form_row(form['delete_big_image'])}}
+                </div>
+            {% endif %}
+            <div class="row-fluid">
+                <div class="control-group form_field field_text">
+                     {{ form_row(form['big_image']) }}
+                </div>
+                <div class="control-group form_field field_text">
+                     {{ form_row(form['title_big_image']) }}
+                </div>
+                <div class="control-group form_field field_text">
+                     {{ form_row(form['alt_big_image']) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock form_big_image %} 
+
+
+{% block form_more %}
+    {{ form_widget(form['more']) }}
+{% endblock form_more %}
+
+{% block form_anons %}
+    <div class="control-group anons">
+        {{ form_label(form['anons']) }}
+        <div class="controls">
+            {{ form_widget(form['anons']) }}
+            {{ form_errors(form['anons']) }}
+        </div>
+        {{ form_widget(form['show_editor_anons']) }}
+        {{ form_label(form['show_editor_anons']) }}
+        <script type="text/javascript">
+            $().ready(function(){
+                FormAction.useVisualEditor('show_editor_anons','anons');
+            });
+        </script>
+    </div>
+{% endblock form_anons %}
+
+{% block form_content %}
+    <div class="control-group content">
+        {{ form_label(form['content']) }}
+        <div class="controls">
+            {{ form_widget(form['content']) }}
+            {{ form_errors(form['content']) }}
+        </div>
+        {{ form_widget(form['show_editor_content']) }}
+        {{ form_label(form['show_editor_content']) }}
+        <script type="text/javascript">
+            $().ready(function(){
+                FormAction.useVisualEditor('show_editor_content','content');
+            });
+        </script>
+    </div>
+{% endblock form_content %}
+
+
+{% block form_fieldset_Price %}
+    <fieldset class="form_block form_fieldset_Price tab-pane">
+        <legend><span>{% trans from "Admin" %}Price{% endtrans %}</span></legend>
+        <div class="row-fluid">
+            <div class="control-group form_field field_entity field_sale">
+                <div class="row-fluid">
+                    <div class="span4">
+                        {{ form_row(form['sale']['purchase_price']) }}
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        {{ form_row(form['sale']['retail_price']) }}
+                    </div>
+                    <div class="span8">
+                        {{ form_row(form['sale']['discount']) }}
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        {{ form_row(form['sale']['VAT']) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+{% endblock form_fieldset_Price %}
+
+{% block form_fieldset_Parameters %}
+    <fieldset class="form_block form_fieldset_Parameters tab-pane">
+        <legend><span>{% trans from "Admin" %}Parameters{% endtrans %}</span></legend>
+        <div class="row-fluid">
+            <div class="control-group form_field field_entity field_sale">
+                <div class="row-fluid">
+                    <div class="span4">
+                        {{ form_row(form['sale']['weight']) }}
+                    </div>
+                    <div class="span8">
+                        {{ form_row(form['sale']['length']) }}
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        {{ form_row(form['sale']['width']) }}
+                    </div>
+                    <div class="span4">
+                        {{ form_row(form['sale']['height']) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+{% endblock form_fieldset_Parameters %}
+
+{% block form_fieldset_Barcode %}
+    <fieldset class="form_block form_fieldset_Barcode tab-pane">
+        <legend><span>{% trans from "Admin" %}Barcode{% endtrans %}</span></legend>
+        <div class="row-fluid">
+            <div class="control-group form_field field_entity field_sale">
+                <div class="control-group barcode">
+                    <div class="controls">
+                        {{ form_widget(form['sale']['barcode']) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+{% endblock form_fieldset_Barcode %}
+
+{% block form_fieldset_Stocks %}
+    <fieldset class="form_block form_fieldset_Stocks tab-pane">
+        <legend><span>{% trans from "Admin" %}Stocks{% endtrans %}</span></legend>
+        {% for stock in Content.getSale.getStocks %}
+            <h4>{{ stock.getStock.getTitle }}</h4>
+            {% for stockForm in form['sale']['stocks'] %}
+                {% if stock.getStock.getId == stockForm.vars.value.getStock.getId %}
+                    <div class="row-fluid">
+                        <div class="control-group barcode">
+                            <div class="controls">
+                                {{ form_widget(stockForm) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </fieldset>
+{% endblock form_fieldset_Stocks %}
+
+{% block form_fieldset_MetaData %}
+    <fieldset class="form_block form_fieldset_MetaData tab-pane">
+        <legend><span>{% trans from "Admin" %}Meta data{% endtrans %}</span></legend>
+        <div class="row-fluid">
+            <div class="control-group form_field field_entity field_meta">
+                {{ form_row(form['meta']['meta_title']) }}
+                {{ form_row(form['meta']['meta_keywords']) }}
+                {{ form_row(form['meta']['meta_description']) }}
+                {{ form_row(form['meta']['more_scripts']) }}
+            </div>
+        </div>
+        <script type="text/javascript">
+            $().ready(function() {
+                FormAction.dublicatTitleForMeta();
+            });
+        </script>
+    </fieldset>
+{% endblock form_fieldset_MetaData %}

@@ -1,0 +1,8 @@
+<option value=""></option>
+{% for one in content %}
+    {% if id and id == one.id %}
+        <option value="{{one.id}}" selected="selected">({{one.id}}) - {{one.title}}</option>
+    {% else %}
+        <option value="{{one.id}}">({{one.id}}) - {{one.title}}</option>
+    {% endif %}
+{% endfor %}

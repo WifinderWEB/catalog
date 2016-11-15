@@ -1,0 +1,102 @@
+{% block collection_widget %}
+{% spaceless %}
+<div class="collection">
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+            {{ form_errors(form) }}
+        <ul class="thumbnails">
+                {% for image in form %}
+            <li class="span3" id="edit_image_{{image.vars.value.id}}_thumb">
+                <div class="thumbnail">
+                    <div class="img_box">
+                        <div>
+                        <img src="{{image.vars.value.getWebPath}}" alt="{{image.vars.value.title}}">
+                        </div>
+                    </div>
+                    <h5>{{image.vars.value.title}}</h5>
+                    <div class="btn-group">
+                        <a onclick="FormAction.editItem('edit_image_{{image.vars.value.id}}')" class="btn edit_item">
+                            <i class="icon-edit"></i> Редактировать
+                        </a>
+                        <a onclick="FormAction.deleteItem('edit_image_{{image.vars.value.id}}')" class="btn btn-danger delete_item">
+                            <i class="icon-remove"></i> Удалить
+                        </a>
+                    </div>
+                </div>
+            </li> 
+            <li id="edit_image_{{image.vars.value.id}}" class="span12 box_image_edit_form">
+                <fieldset class="form_block form_fieldset_Form tab-pane">
+                    <legend><span>{% trans from "Admin" %}Edit video{% endtrans %} "{{image.vars.value.title}}"</span></legend>
+                    <div class="img_edit_box">
+                        <img src="{{image.vars.value.getWebPath}}" alt="{{image.vars.value.title}}">
+                    </div>
+                    <div class="row-fluid">
+                        <table>
+                            <tr>
+                                <td style="width: 25%">{{ form_row(image['image']) }}</td>
+                                <td style="width: 25%"></td>
+                                <td style="width: 25%"></td>
+                                <td style="width: 25%"></td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_row(image['url_video']) }}</td>
+                                <td rowspan="2">{{ form_row(image['description'], {'attr': {'class':'image_description'}}) }}</td>
+                                <td style=" vertical-align: top;">{{ form_row(image['is_active']) }}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_row(image['title']) }}</td>
+                                <td>{{ form_row(image['sort']) }}</td>
+                                <td>
+                                    <a onclick="FormAction.deleteItem('edit_image_{{image.vars.value.id}}')" class="btn btn-danger delete_item">
+                                        <i class="icon-remove"></i> Удалить
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </fieldset>
+            </li>
+                {% endfor %}
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+{% endspaceless %}
+{% endblock collection_widget %}
+
+{% block collection_item_widget %}
+{% spaceless %}
+<fieldset class="form_block form_fieldset_Form tab-pane" id="image-__name__">
+    <legend><span>{% trans from "Admin" %}New video{% endtrans %}</span></legend>
+    <div class="row-fluid">
+        <table>
+            <tr>
+                <td style="width: 25%">{{ form_row(prototype['image']) }}</td>
+                <td style="width: 25%"></td>
+                <td style="width: 25%"></td>
+                <td style="width: 25%"></td>
+            </tr>
+            <tr>
+                <td>{{ form_row(prototype['url_video']) }}</td>
+                <td rowspan="3">{{ form_row(prototype['description'], {'attr': {'class':'image_description'}}) }}</td>
+                <td style="vertical-align: top;">{{ form_row(prototype['is_active']) }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ form_row(prototype['title']) }}</td>
+                <td>{{ form_row(prototype['sort']) }}</td>
+                <td>
+                    <a onclick="FormAction.deleteItem('image-__name__')" class="btn btn-danger delete_item">
+                        <i class="icon-remove"></i> Удалить
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</fieldset>
+{% endspaceless %}
+{% endblock collection_item_widget %}

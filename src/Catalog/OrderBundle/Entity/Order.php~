@@ -1,0 +1,215 @@
+<?php
+
+//src/Catalog/OrderBundle/Entity/Order.php
+
+namespace Catalog\OrderBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\ExecutionContextInterface;
+
+/**
+ * @ORM\Table(name="wf_order")
+ * @ORM\Entity(repositoryClass="Catalog\OrderBundle\Entity\Repository\OrderRepository")
+ */
+class Order
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $project_id;
+    /**
+     * @ORM\ManyToOne(targetEntity="Catalog\ProjectBundle\Entity\Project", inversedBy="join_order")
+     * @ORM\JoinColumn(name="project_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $project;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter last name.", groups={"Order"})
+     * @Assert\Regex(
+     *       pattern="/^([a-zA-Zа-яА-ЯёЁ]+(\s+)?)+([a-zA-Zа-яА-ЯёЁ]+)$/u",
+     *       message="Field can contain only letters.",
+     *       groups={"Order"}
+     * )
+     */
+    protected $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter middle name.", groups={"Order"})
+     * @Assert\Regex(
+     *       pattern="/^([a-zA-Zа-яА-ЯёЁ]+(\s+)?)+([a-zA-Zа-яА-ЯёЁ]+)$/u",
+     *       message="Field can contain only letters.",
+     *       groups={"Order"}
+     * )
+     */
+    protected $middleName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter first name.", groups={"Order"})
+     * @Assert\Regex(
+     *       pattern="/^([a-zA-Zа-яА-ЯёЁ]+(\s+)?)+([a-zA-Zа-яА-ЯёЁ]+)$/u",
+     *       message="Field can contain only letters.",
+     *       groups={"Order"}
+     * )
+     */
+    protected $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter country.", groups={"Order"})
+     */
+    protected $country;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter region.", groups={"Order"})
+     */
+    protected $region;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter city.", groups={"Order"})
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter street.", groups={"Order"})
+     */
+    protected $street;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter house.", groups={"Order"})
+     */
+    protected $house;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $room;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Regex(
+     *       pattern="/^[\d]{6}$/",
+     *       message="Wrong code.",
+     *       groups={"Order"}
+     * )
+     */
+    protected $postcode;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter phone.", groups={"Order"})
+     * @Assert\Regex(
+     *       pattern="/^\+([\d]{1})\s\(([\d]{3})\)\s([\d]{3})\-([\d]{4})$/",
+     *       message="Wrong phone.",
+     *       groups={"Order"}
+     * )
+     */
+    protected $phone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please enter email.", groups={"Order"})
+     * @Assert\Regex(
+     *       pattern="/^[-._\+a-zA-Z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/",
+     *       message="Wrong email.",
+     *       groups={"Order"}
+     * )
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $discount;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $itog;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Goods", mappedBy="order", cascade={"remove", "persist"})
+     */
+    protected $goods;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $is_active = true;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $status;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Catalog\StockBundle\Entity\Stock", inversedBy="orders")
+     * @ORM\JoinColumn(name="stock_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $stock;
+
+    /**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    protected $created;
+
+    /**
+     * @var datetime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    protected $updated;
+
+    public function getFullName(){
+        $result  = array();
+        if($this->lastName)
+            $result[] = $this->lastName;
+        if($this->firstName)
+            $result[] = $this->firstName;
+        if($this->middleName)
+            $result[] = $this->middleName;
+        return implode(' ', $result);
+    }
+
+    public function getAddress(){
+        $result  = array();
+        if($this->getCountry())
+            $result[] = $this->getCountry();
+        if($this->getRegion())
+            $result[] = $this->getRegion();
+        if($this->getCity())
+            $result[] = $this->getCity();
+        if($this->getStreet())
+            $result[] = 'ул. ' . $this->getStreet();
+        if($this->getHouse())
+            $result[] = 'дом № ' . $this->getHouse();
+        if($this->getRoom())
+            $result[] = 'кв. ' . $this->getRoom();
+        if($this->getPostcode())
+            $result[] = 'почтовый индекс ' . $this->getPostcode();
+
+        return implode(', ', $result);
+    }
+}

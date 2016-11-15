@@ -1,0 +1,57 @@
+generator: admingenerator.generator.doctrine
+params:
+    model: Catalog\ImageGalleryBundle\Entity\Image
+    namespace_prefix: Catalog
+    concurrency_lock: ~
+    bundle_name: ImageGalleryBundle
+    pk_requirement: ~
+    fields: ~
+    object_actions:
+        delete: ~
+    batch_actions:
+        delete: ~
+builders:
+    list:
+        params:
+            title: List for ImageGalleryBundle
+            display: ~
+            actions:
+                new: ~
+            object_actions:
+                edit: ~
+                delete: ~
+    filters:
+        params:
+            display: ~
+    new:
+        params:
+            title: New object for ImageGalleryBundle
+            display: ~
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+    edit:
+        params:
+            title: "You're editing the object \"%object%\"|{ %object%: Image.title }|"
+            display: ~
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+                delete: ~
+    show:
+        params:
+            title: "You're viewing the object \"%object%\"|{ %object%: Image.title }|"
+            display: ~
+            actions:
+                list: ~
+                new: ~
+    actions:
+        params:
+            object_actions:
+                delete: ~
+            batch_actions:
+                delete: ~

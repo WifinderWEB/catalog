@@ -1,0 +1,59 @@
+{% extends_admingenerated "CatalogCategoryBundle:GroupNew:form.html.twig" %}
+
+{% block form_parameter %}
+    <div id="parameter_list"
+        data-prototype="
+        {% filter escape %}
+             {{ include('CatalogCategoryBundle:GroupNew:prototype.html.twig', { 'form': form.parameter.vars.prototype }) }}
+         {% endfilter %}">
+        {% for item in form.parameter %}
+            <div class="row-fluid parameters">
+                {{ include('CatalogCategoryBundle:GroupNew:prototype.html.twig', { 'form': item }) }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row-fluid">
+        <a href="#" id="add-parameter">{% trans from "Admin" %}Add new parameter{% endtrans %}</a>
+    </div>
+
+    <script type="text/javascript">
+        // keep track of how many email fields have been rendered
+        var emailCount = '{{ form.parameter|length }}';
+
+        jQuery(document).ready(function() {
+            $collectionHolder = $('#parameter_list .parameters');
+
+            // add a delete link to all of the existing tag form li elements
+            $collectionHolder.each(function() {
+                addTagFormDeleteLink($(this));
+            });
+
+            jQuery('#add-parameter').click(function(e) {
+                e.preventDefault();
+
+                var emailList = jQuery('#parameter_list');
+
+                var newWidget = emailList.attr('data-prototype');
+                newWidget = newWidget.replace(/__name__/g, emailCount);
+                emailCount++;
+
+                var newLi = jQuery('<div class="row-fluid parameters"></div>').html(newWidget);
+                newLi.appendTo(emailList);
+                $('#edit_groupparameters_parameter_' + (emailCount - 1)  + '_is_active').prop('checked',true);
+
+                addTagFormDeleteLink(newLi);
+            });
+
+            function addTagFormDeleteLink($tagFormLi) {
+                var $removeFormA = $('<a href="#">{% trans from "Admin" %}Delete this parameter{% endtrans %}</a>');
+                $tagFormLi.find('.actions').html($removeFormA);
+
+                $removeFormA.on('click', function(e) {
+                    e.preventDefault();
+
+                    $tagFormLi.remove();
+                });
+            }
+        })
+    </script>
+{% endblock form_parameter %}

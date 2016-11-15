@@ -1,0 +1,7 @@
+parameters:
+#    catalog_tag.example.class: Catalog\TagBundle\Example
+
+services:
+#    catalog_tag.example:
+#        class: %catalog_tag.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

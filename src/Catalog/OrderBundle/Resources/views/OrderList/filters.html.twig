@@ -1,0 +1,78 @@
+{% block list_filters %}
+    <div id="myModalFilterForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">{% trans from "Admingenerator" %}list.filters{% endtrans %}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row-fluid filters-list">
+                <form id="filter_form" action="{{ path("Catalog_OrderBundle_Order_filters") }}" method="post" {{ form_enctype(form) }}>
+                    <fieldset class="form_block form_fieldset_NONE">
+                        {{ form_errors(form) }}
+                        <div class="control-group">
+                            {{ form_label(form['lastName'], 'Last Name'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['lastName']) }}
+                            </div>
+                            {{ form_errors(form['lastName']) }}
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form['firstName'], 'First Name'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['firstName']) }}
+                            </div>
+                            {{ form_errors(form['firstName']) }}
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form['middleName'], 'Middle Name'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['middleName']) }}
+                            </div>
+                            {{ form_errors(form['middleName']) }}
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form['phone'], 'Phone'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['phone']) }}
+                            </div>
+                            {{ form_errors(form['phone']) }}
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form['email'], 'Email'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['email']) }}
+                            </div>
+                            {{ form_errors(form['email']) }}
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form['created'], 'Created'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['created']) }}
+                            </div>
+                            {{ form_errors(form['created']) }}
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form['status'], 'Status'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['status']) }}
+                            </div>
+                            {{ form_errors(form['status']) }}
+                        </div>
+                        <div class="control-group">
+                            {{ form_label(form['is_active'], 'Is active'|trans({}, 'Admin')) }}
+                            <div class="controls">
+                                {{ form_widget(form['is_active']) }}
+                            </div>
+                            {{ form_errors(form['is_active']) }}
+                        </div>
+                        {{ form_rest(form) }}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button form="filter_form" type="submit" class="btn btn-small btn-primary"><i class="icon-search icon-white"></i> {% trans from "Admingenerator" %}list.button.filter{% endtrans %}</button>
+            <button form="filter_form" type="submit" class="btn btn-small" name="reset" value="true"><i class="icon-refresh"></i> {% trans from "Admingenerator" %}list.button.reset{% endtrans %}</button>
+        </div>
+    </div>
+{% endblock list_filters %}

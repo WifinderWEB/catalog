@@ -1,0 +1,31 @@
+{% extends "::base.html.twig"%}
+
+{% block stylesheets %}    
+    {{ parent() }}
+{% endblock stylesheets %}
+
+{% block javascripts %}    
+    {{ parent() }}
+{% endblock javascripts %}  
+
+{% block title %}
+     {{ parent() }} - {% trans from "Admin" %}List for Project{% endtrans %}
+{% endblock title %}
+
+{% block body %}    
+
+{% block page_title %}
+<header>
+    <h1>{% trans from "Admin" %}My projects{% endtrans %}</h1>
+</header>
+{% endblock page_title %}
+     
+<div class="row-fluid">
+    <div class=" span12 ">
+        {% block list_scopes %}
+        {% endblock list_scopes %}
+
+        {% include "CatalogProjectBundle:Project:results.html.twig" with {  } %}
+    </div>
+</div>
+{% endblock body %}

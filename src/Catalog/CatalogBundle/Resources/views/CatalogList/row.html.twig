@@ -1,0 +1,14 @@
+{% extends_admingenerated "CatalogCatalogBundle:CatalogList:row.html.twig" %}
+
+{% block list_td_column_title %}
+    <div style="padding-left: {{Catalog.level * 20}}px">
+        {{ Catalog.title }}
+        {% if Catalog.content %}
+            <br/>
+            <span class="link_related_content">
+            [ {{Catalog.content.alias}} ]    <a class="init_tooltip" href="{{path('Catalog_ContentBundle_Content_edit', {pk : Catalog.content.id})}}" data-original-title="Редактировать прикрепленный контент">{{Catalog.content.title}}</a>
+            </span>
+        {% endif %}
+    </div>
+{% endblock list_td_column_title %}
+    

@@ -1,0 +1,13 @@
+{% extends_admingenerated "CatalogImageGalleryBundle:Image_categoryList:row.html.twig" %}
+
+{% block list_td_column_images %}
+    <ul class="thumbnails">
+        {% for object in ImageCategory.images|slice(0, 3) %}
+        <li>
+            <div class="thumbnail">
+                <img src="{{object.getWebPath | apply_filter('100x100_thumb')}}" alt="{{object.title}}"/>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock list_td_column_images %}

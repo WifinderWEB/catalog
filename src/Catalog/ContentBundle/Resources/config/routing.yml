@@ -1,0 +1,7 @@
+catalog_content_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: CatalogContentBundle:Default:index }
+
+get_translate:
+    pattern:  /ajax/{text}
+    defaults: { _controller: CatalogContentBundle:Ajax:index }

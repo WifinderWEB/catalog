@@ -1,0 +1,44 @@
+{% extends_admingenerated "CatalogCategoryBundle:CategoryNew:form.html.twig" %}
+
+{% render(controller( "CatalogContentBundle:Translate:getToken" ))%}
+
+{% form_theme form.parent "CatalogCatalogBundle:Template:choice.html.twig" %}
+
+{% block form_alias %}
+    <div class="generate_btn_block">
+        <button type="button" id="main_button_translate" class="btn edit_item btn init_tooltip" data-original-title="Сгенерировать псевдоним из заголовка">
+            <i class="icon-fast-forward"></i>
+        </button>
+        <script type="text/javascript">
+            $().ready(function(){
+                var translate = new TranslateModel();
+                translate.Init({
+                    fromFieldId : 'new_category_title',
+                    toFieldId : 'new_category_alias',
+                    buttonId : 'main_button_translate'
+                });
+                translate.Translate.OnClick();
+            });
+        </script>
+    </div>
+    <div class="generate_alias_block">
+        {{ form_row(form['alias']) }}
+    </div>
+{% endblock form_alias %}
+
+{% block form_anons %}
+    <div class="control-group anons">
+        {{ form_label(form['anons']) }}
+        <div class="controls">
+            {{ form_widget(form['anons']) }}
+            {{ form_errors(form['anons']) }}
+        </div>
+        {{ form_widget(form['show_editor_anons']) }}
+        {{ form_label(form['show_editor_anons']) }}
+        <script type="text/javascript">
+            $().ready(function() {
+                FormAction.useVisualEditor('show_editor_anons', 'anons');
+            });
+        </script>
+    </div>
+{% endblock form_anons %}

@@ -1,0 +1,22 @@
+{% if item.divider is defined%}
+    <li class="divider"></li>
+{% else %}
+    {% if item.child is defined %}
+        <li class="dropdown{% if subMenu == 1%} submenu{% endif %}">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{item.title}} <b class="caret icon-white"></b></a>
+            <ul class="dropdown-menu">
+                {% for one in item.child %}
+                    {% include 'CatalogCatalogBundle:Menu:_mainSubMenu.html.twig' with {'item': one, 'subMenu' : 1}%}
+                {% endfor %}
+            </ul>
+        </li>
+    {% else %}
+        <li>
+            {% if item.params is defined %}
+                <a href="{{ path( item.link, item.params)}}">{{ item.title }}</a>
+            {% else %}
+                <a href="{{ path( item.link )}}">{{ item.title }}</a>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endif %}

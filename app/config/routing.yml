@@ -1,0 +1,167 @@
+Catalog_CategoryBundle_Category_move_up:
+    pattern:   /admin/category/{id}/move_up
+    defaults: { _controller: Catalog\CategoryBundle\Controller\Category\ListController::moveUpAction }
+
+Catalog_CategoryBundle_Category_move_down:
+    pattern:   /admin/category/{id}/move_down
+    defaults: { _controller: Catalog\CategoryBundle\Controller\Category\ListController::moveDownAction }
+
+
+CatalogCategoryBundle_admin_catalog_category_bundle_category:
+    resource: "@CatalogCategoryBundle/Controller/Category/"
+    type:     admingenerator
+    prefix:   /admin/category
+
+CatalogCategoryBundle_admin_catalog_category_bundle_group:
+    resource: "@CatalogCategoryBundle/Controller/Group/"
+    type:     admingenerator
+    prefix:   /admin/group_category
+
+CatalogOrderBundle_admin_catalog_order_bundle_order:
+    resource: "@CatalogOrderBundle/Controller/Order/"
+    type:     admingenerator
+    prefix:   /admin/order
+
+catalog_order:
+    resource: "@CatalogOrderBundle/Resources/config/routing.yml"
+    prefix:   /
+
+CatalogStockBundle_admin_catalog_stock_bundle_stock:
+    resource: "@CatalogStockBundle/Controller/Stock/"
+    type:     admingenerator
+    prefix:   /admin/stock
+
+catalog_stock:
+    resource: "@CatalogStockBundle/Resources/config/routing.yml"
+    prefix:   /
+
+Catalog_ContentBundle_Content_clone:
+    pattern: /admin/content/{id}/clone
+    defaults: { _controller: Catalog\ContentBundle\Controller\Content\ListController::cloneAction }
+
+Catalog_CatalogBundle_Content_refresh:
+    pattern: /admin/catalog/refresh_content/{id}
+    defaults: { _controller: Catalog\CatalogBundle\Controller\Catalog\ActionsController::refreshContentAction, id: null }
+
+api_catalog:
+    resource: "@ApiCatalogBundle/Resources/config/routing.yml"
+    prefix:   /
+
+CatalogProjectBundle_admin_catalog_project_bundle_field:
+    resource: "@CatalogProjectBundle/Controller/Field/"
+    type:     admingenerator
+    prefix:   /admin/field
+
+CatalogFileGalleryBundle_get_file:
+    pattern: /admin/file/{id}
+    defaults: { _controller: Catalog\FileGalleryBundle\Controller\FileController::getFileWithOriginNameAction }
+    requirements:
+        id: \d+
+        
+CatalogFileGalleryBundle_admin_catalog_file_gallery_bundle_file_category:
+    resource: "@CatalogFileGalleryBundle/Controller/File_category/"
+    type:     admingenerator
+    prefix:   /admin/file_category
+
+CatalogFileGalleryBundle_admin_catalog_file_gallery_bundle_file:
+    resource: "@CatalogFileGalleryBundle/Controller/File/"
+    type:     admingenerator
+    prefix:   /admin/files
+
+select_project:
+    pattern: /admin/select_project/{id}
+    defaults: { _controller: Catalog\ProjectBundle\Controller\ProjectController::selectProjectAction }
+    requirements:
+        id:  \d+
+    
+CatalogProjectBundle_admin_catalog_project_bundle_project:
+    resource: "@CatalogProjectBundle/Controller/Project/"
+    type:     admingenerator
+    prefix:   /admin/project
+
+CatalogUserBundle_admin_catalog_user_bundle_user:
+    resource: "@CatalogUserBundle/Controller/User/"
+    type:     admingenerator
+    prefix:   /admin/user
+
+#CatalogVideoGalleryBundle_admin_catalog_video_gallery_bundle_video:
+#    resource: "@CatalogVideoGalleryBundle/Controller/Video/"
+#    type:     admingenerator
+#    prefix:   /admin/video
+
+CatalogVideoGalleryBundle_admin_catalog_video_gallery_bundle_video_category:
+    resource: "@CatalogVideoGalleryBundle/Controller/Video_category/"
+    type:     admingenerator
+    prefix:   /admin/video_category
+
+#CatalogImageGalleryBundle_admin_catalog_image_gallery_bundle_image:
+#    resource: "@CatalogImageGalleryBundle/Controller/Image/"
+#    type:     admingenerator
+#    prefix:   /admin/image
+    
+CatalogImageGalleryBundle_admin_catalog_image_gallery_bundle_image_category:
+    resource: "@CatalogImageGalleryBundle/Controller/Image_category/"
+    type:     admingenerator
+    prefix:   /admin/image_category
+
+CatalogContentBundle_admin_catalog_content_bundle_content:
+    resource: "@CatalogContentBundle/Controller/Content/"
+    type:     admingenerator
+    prefix:   /admin/content
+
+Catalog_CatalogBundle_Catalog_move_up:
+    pattern:   /admin/catalog/{id}/move_up
+    defaults: { _controller: Catalog\CatalogBundle\Controller\Catalog\ListController::moveUpAction }
+
+Catalog_CatalogBundle_Catalog_move_down:
+    pattern:   /admin/catalog/{id}/move_down
+    defaults: { _controller: Catalog\CatalogBundle\Controller\Catalog\ListController::moveDownAction }
+
+CatalogCatalogBundle_admin_catalog_catalog_bundle_catalog:
+    resource: "@CatalogCatalogBundle/Controller/Catalog/"
+    type:     admingenerator
+    prefix:   /admin/catalog
+
+CatalogTagBundle_admin_catalog_tag_bundle_tag:
+    resource: "@CatalogTagBundle/Controller/Tag/"
+    type:     admingenerator
+    prefix:   /admin/tag
+
+homepage:
+    pattern:  /admin/
+    defaults: { _controller: Catalog\ProjectBundle\Controller\ProjectController::dashboardAction }
+    
+homepage_default:
+    pattern:  /
+    defaults: { _controller: Catalog\ProjectBundle\Controller\ProjectController::indexAction }
+
+elfinder:
+    resource: "@FMElfinderBundle/Resources/config/routing.yml"
+
+_imagine:
+    resource: .
+    type:     imagine
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+    
+fos_user_group:
+    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+    prefix: /admin/group
+

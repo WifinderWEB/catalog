@@ -1,0 +1,4 @@
+services:
+#    catalog_category.example:
+#        class: Catalog\CategoryBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

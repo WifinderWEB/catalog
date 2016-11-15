@@ -1,0 +1,7 @@
+{% extends_admingenerated "CatalogCategoryBundle:CategoryList:row.html.twig" %}
+
+{% block list_td_column_title %}
+    <div style="padding-left: {{Category.level * 20}}px">
+        {{ Category.title }}
+    </div>
+{% endblock list_td_column_title %}

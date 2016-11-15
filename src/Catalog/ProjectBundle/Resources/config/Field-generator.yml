@@ -1,0 +1,57 @@
+generator: admingenerator.generator.doctrine
+params:
+    model: Catalog\ProjectBundle\Entity\Field
+    namespace_prefix: Catalog
+    concurrency_lock: ~
+    bundle_name: ProjectBundle
+    pk_requirement: ~
+    fields: ~
+    object_actions:
+        delete: ~
+    batch_actions:
+        delete: ~
+builders:
+    list:
+        params:
+            title: Список типов полей
+            display: [ title, alias, is_active ]
+            actions:
+                new: ~
+            object_actions:
+                edit: ~
+                delete: ~
+    filters:
+        params:
+            display: [ title, alias, is_active ]
+    new:
+        params:
+            title: Новый тип поля
+            display: [ is_active, title, alias ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+    edit:
+        params:
+            title: "Редактировать тип поля \"%object%\"|{ %object%: Field.title }|"
+            display: [ is_active, title, alias ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+                delete: ~
+    show:
+        params:
+            title: "You're viewing the object \"%object%\"|{ %object%: Field.title }|"
+            display: ~
+            actions:
+                list: ~
+                new: ~
+    actions:
+        params:
+            object_actions:
+                delete: ~
+            batch_actions:
+                delete: ~

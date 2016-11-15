@@ -1,0 +1,7 @@
+parameters:
+#    catalog_image_gallery.example.class: Catalog\ImageGalleryBundle\Example
+
+services:
+#    catalog_image_gallery.example:
+#        class: %catalog_image_gallery.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,50 @@
+<?php
+// src/Catalog/CatalogBundle/Entity/ContentMeta.php
+
+namespace Catalog\ContentBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Table(name="content_meta")
+ * @ORM\Entity(repositoryClass="Catalog\ContentBundle\Entity\Repository\ContentMetaRepository")
+ */
+class ContentMeta
+{
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $meta_title;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $meta_keywords;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $meta_description;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $more_scripts;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Content", inversedBy="meta")
+     * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
+     */
+    protected $content;
+}

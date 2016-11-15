@@ -1,0 +1,29 @@
+#footer {
+    position: fixed;
+    bottom: 0px;
+    width:97%;
+}
+#login_form form table {
+    margin: 0 auto;
+}
+#login_form form table td{
+    border: none;
+}
+#login_form {
+    margin-top: 10%;
+}
+#login_form .table-hover tbody tr:hover > td, .table-hover tbody tr:hover > th {
+    background-color: #f9f9f9;
+}
+#login_form #remember_me{
+    display: inline-block;
+    margin: 0 0 1px 6px;
+}
+#login_form #label_remember_me{
+    display: inline-block;
+}
+.error{
+    color: #b94a48;
+    text-align: center;
+}
+

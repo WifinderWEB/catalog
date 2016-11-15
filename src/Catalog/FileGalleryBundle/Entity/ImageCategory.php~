@@ -1,0 +1,539 @@
+<?php
+
+//src/NNWelcome/ImageGalleryBundle/Entity/ImageCategory.php
+
+namespace NNWelcome\ImageGalleryBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * @ORM\Table(name="image_gallery_category")
+ * @ORM\Entity(repositoryClass="NNWelcome\ImageGalleryBundle\Entity\Repository\ImageCategoryRepository")
+ * @Gedmo\TranslationEntity(class="NNWelcome\ImageGalleryBundle\Entity\ImageCategoryTranslation")
+ * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields="alias", message="Sorry, this alias is already in use.", groups={"imageCategory"})
+ */
+class ImageCategory {
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $sort;
+    
+    /**
+     * @ORM\Column( type="string", length=100, unique=true)
+     * @Assert\NotBlank(message="Please enter alias.", groups={"ImageCategory"})
+     * @Assert\Regex( 
+     *       pattern="/^[a-z,A-Z,\_,\-,0-9]+$/",
+     *       message="Alias can contain only letters, numbers and symbols '_' , '-'.", 
+     *       groups={"ImageCategory"}
+     * )
+     */
+    protected $alias;
+    
+    /**
+     * @Gedmo\Translatable
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $title;
+
+    /**
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+    
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $is_active = true;
+    
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="ImageCategoryTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
+    
+    /**
+    * @ORM\OneToMany(
+     *   targetEntity="Image", 
+     *   mappedBy="category", 
+     *   cascade={"persist", "remove"})
+    */
+    protected $images;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="NNWelcome\NticBundle\Entity\Excurtion", mappedBy="image_gallery")
+     */
+    protected $join_excurtion;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="NNWelcome\NticBundle\Entity\Route", mappedBy="image_gallery")
+     */
+    protected $join_route;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="NNWelcome\NticBundle\Entity\FoodItem", mappedBy="image_gallery")
+     */
+    protected $join_food_item;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="NNWelcome\NticBundle\Entity\Hotel", mappedBy="image_gallery")
+     */
+    protected $join_hotel;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="NNWelcome\NticBundle\Entity\Showplace", mappedBy="image_gallery")
+     */
+    protected $join_showplace;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="NNWelcome\LocationBundle\Entity\City", mappedBy="image_gallery")
+     */
+    protected $join_city;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="NNWelcome\PageBundle\Entity\Content", mappedBy="image_gallery")
+     */
+    protected $join_content;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="NNWelcome\NticBundle\Entity\Event", mappedBy="image_gallery")
+     */
+    protected $join_event;
+    
+    protected $action;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->join_excurtion = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->join_route = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->join_food_item = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->join_showplace = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->join_content = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * Set alias
+     *
+     * @param string $alias
+     * @return ImageCategory
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    
+        return $this;
+    }
+
+    /**
+     * Get alias
+     *
+     * @return string 
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return ImageCategory
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return ImageCategory
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    /**
+     * Set is_active
+     *
+     * @param boolean $isActive
+     * @return ImageCategory
+     */
+    public function setIsActive($isActive) {
+        $this->is_active = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get is_active
+     *
+     * @return boolean 
+     */
+    public function getIsActive() {
+        return $this->is_active;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \NNWelcome\ImageGalleryBundle\Entity\Image $images
+     * @return ImageCategory
+     */
+    public function addImage(\NNWelcome\ImageGalleryBundle\Entity\Image $images)
+    {
+        $this->images[] = $images;
+    
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \NNWelcome\ImageGalleryBundle\Entity\Image $images
+     */
+    public function removeImage(\NNWelcome\ImageGalleryBundle\Entity\Image $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+    
+    public function setAction($action)
+    {
+        $this->action = $action;
+        return $this;
+    }
+    
+    public function getAction()
+    {
+        return $this->action;
+    }
+    
+    /**
+     * Add translations
+     *
+     * @param \NNWelcome\ImageGalleryBundle\Entity\ImageCategoryTranslation $translations
+     * @return ImageCategory
+     */
+    public function addTranslation(\NNWelcome\ImageGalleryBundle\Entity\ImageCategoryTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Remove translations
+     *
+     * @param \NNWelcome\ImageGalleryBundle\Entity\ImageCategoryTranslation $translations
+     */
+    public function removeTranslation(\NNWelcome\ImageGalleryBundle\Entity\ImageCategoryTranslation $translations)
+    {
+        $this->translations->removeElement($translations);
+    }
+
+    /**
+     * Get translations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+    
+    /**
+     * Set sort
+     *
+     * @param integer $sort
+     * @return ImageCategory
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+    
+        return $this;
+    }
+
+    /**
+     * Get sort
+     *
+     * @return integer 
+     */
+    public function getSort()
+    {
+        return $this->sort;
+    }
+    
+    public function __toString() {
+        return $this->getTitle();
+    }
+
+    /**
+     * Add join_excurtion
+     *
+     * @param \NNWelcome\NticBundle\Entity\Excurtion $joinExcurtion
+     * @return ImageCategory
+     */
+    public function addJoinExcurtion(\NNWelcome\NticBundle\Entity\Excurtion $joinExcurtion)
+    {
+        $this->join_excurtion[] = $joinExcurtion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove join_excurtion
+     *
+     * @param \NNWelcome\NticBundle\Entity\Excurtion $joinExcurtion
+     */
+    public function removeJoinExcurtion(\NNWelcome\NticBundle\Entity\Excurtion $joinExcurtion)
+    {
+        $this->join_excurtion->removeElement($joinExcurtion);
+    }
+
+    /**
+     * Get join_excurtion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getJoinExcurtion()
+    {
+        return $this->join_excurtion;
+    }
+    
+    /**
+     * Add join_route
+     *
+     * @param \NNWelcome\NticBundle\Entity\Route $joinRoute
+     * @return ImageCategory
+     */
+    public function addJoinRoute(\NNWelcome\NticBundle\Entity\Route $joinRoute)
+    {
+        $this->join_route[] = $joinRoute;
+    
+        return $this;
+    }
+
+    /**
+     * Remove join_route
+     *
+     * @param \NNWelcome\NticBundle\Entity\Route $joinRoute
+     */
+    public function removeJoinRoute(\NNWelcome\NticBundle\Entity\Route $joinRoute)
+    {
+        $this->join_route->removeElement($joinRoute);
+    }
+
+    /**
+     * Get join_route
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getJoinRoute()
+    {
+        return $this->join_route;
+    }
+
+    /**
+     * Add join_food_item
+     *
+     * @param \NNWelcome\NticBundle\Entity\FoodItem $joinFoodItem
+     * @return ImageCategory
+     */
+    public function addJoinFoodItem(\NNWelcome\NticBundle\Entity\FoodItem $joinFoodItem)
+    {
+        $this->join_food_item[] = $joinFoodItem;
+    
+        return $this;
+    }
+
+    /**
+     * Remove join_food_item
+     *
+     * @param \NNWelcome\NticBundle\Entity\FoodItem $joinFoodItem
+     */
+    public function removeJoinFoodItem(\NNWelcome\NticBundle\Entity\FoodItem $joinFoodItem)
+    {
+        $this->join_food_item->removeElement($joinFoodItem);
+    }
+
+    /**
+     * Get join_food_item
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getJoinFoodItem()
+    {
+        return $this->join_food_item;
+    }
+
+    /**
+     * Add join_hotel
+     *
+     * @param \NNWelcome\NticBundle\Entity\Hotel $joinHotel
+     * @return ImageCategory
+     */
+    public function addJoinHotel(\NNWelcome\NticBundle\Entity\Hotel $joinHotel)
+    {
+        $this->join_hotel[] = $joinHotel;
+    
+        return $this;
+    }
+
+    /**
+     * Remove join_hotel
+     *
+     * @param \NNWelcome\NticBundle\Entity\Hotel $joinHotel
+     */
+    public function removeJoinHotel(\NNWelcome\NticBundle\Entity\Hotel $joinHotel)
+    {
+        $this->join_hotel->removeElement($joinHotel);
+    }
+
+    /**
+     * Get join_hotel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getJoinHotel()
+    {
+        return $this->join_hotel;
+    }
+
+    /**
+     * Add join_showplace
+     *
+     * @param \NNWelcome\NticBundle\Entity\Showplace $joinShowplace
+     * @return ImageCategory
+     */
+    public function addJoinShowplace(\NNWelcome\NticBundle\Entity\Showplace $joinShowplace)
+    {
+        $this->join_showplace[] = $joinShowplace;
+    
+        return $this;
+    }
+
+    /**
+     * Remove join_showplace
+     *
+     * @param \NNWelcome\NticBundle\Entity\Showplace $joinShowplace
+     */
+    public function removeJoinShowplace(\NNWelcome\NticBundle\Entity\Showplace $joinShowplace)
+    {
+        $this->join_showplace->removeElement($joinShowplace);
+    }
+
+    /**
+     * Get join_showplace
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getJoinShowplace()
+    {
+        return $this->join_showplace;
+    }
+
+    /**
+     * Add join_city
+     *
+     * @param \NNWelcome\LocationBundle\Entity\City $joinCity
+     * @return ImageCategory
+     */
+    public function addJoinCity(\NNWelcome\LocationBundle\Entity\City $joinCity)
+    {
+        $this->join_city[] = $joinCity;
+    
+        return $this;
+    }
+
+    /**
+     * Remove join_city
+     *
+     * @param \NNWelcome\LocationBundle\Entity\City $joinCity
+     */
+    public function removeJoinCity(\NNWelcome\LocationBundle\Entity\City $joinCity)
+    {
+        $this->join_city->removeElement($joinCity);
+    }
+
+    /**
+     * Get join_city
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getJoinCity()
+    {
+        return $this->join_city;
+    }
+}

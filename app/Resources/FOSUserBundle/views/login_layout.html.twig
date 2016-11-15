@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Welcome to the admin panel{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    {% block scripts_head %}
+        {% javascripts filter='?yui_js' output='assetic/js/compiled/components.min.js'
+            'components/jquery/jquery.js'
+            'components/jquery-ui/jquery-ui.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% javascripts filter='?yui_js' output='assetic/js/compiled/components/html5shiv.min.js'
+            'components/html5shiv/dist/html5shiv.js'
+        %}
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        <![endif]-->
+        {% endjavascripts %}
+    {% endblock %}
+
+    {% block stylesheets %}
+        {% stylesheets filter='cssrewrite,?yui_css' output='assetic/css/compiled/components.min.css'
+            'components/bootstrap/css/bootstrap.css'
+            'components/bootstrap/css/bootstrap-responsive.css'
+            'components/font-awesome/css/font-awesome.css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" />
+        {% endstylesheets %}
+        <!--[if lt IE 7]>
+        <link rel="stylesheet" href="{{ asset('components/font-awesome/css/font-awesome-ie7.min') }}" type="text/css" media="all" />
+        <![endif]-->
+        {% stylesheets filter='cssrewrite,?yui_css' output='/assetic/css/compiled/admingenerator.min.css'
+            'bundles/admingeneratorgenerator/css/general.css'
+            'bundles/admingeneratorgenerator/css/profile.css'
+            'bundles/admingeneratorgenerator/css/nested-list.css'
+            'bundles/admingeneratorgenerator/css/bootstrap-extended.css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" />
+        {% endstylesheets %}
+        <link href="{{ asset('/css/login_form.css') }}" type="text/css" rel="stylesheet" />
+    {% endblock %}
+
+    {% block icons %}
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="{{ asset('bundles/admingeneratorgenerator/ico/favicon.ico') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-144-precomposed.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-114-precomposed.png') }}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-72-precomposed.png') }}">
+        <link rel="apple-touch-icon-precomposed" href="{{ asset('bundles/admingeneratorgenerator/ico/apple-touch-icon-57-precomposed.png') }}">
+    {% endblock %}
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-blue navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">Панель администратора</a>
+                    <!--/.nav-collapse -->
+                </div><!--/.container -->
+            </div><!--/.navbar-inner -->
+        </div>
+
+        <div class="container-fluid">
+      {% block flashes %}
+            <div id="flashes" class="row-fluid">
+          {% for type, flashMessages in app.session.flashbag.all() %}
+            {% for flashMessage in flashMessages %}
+                <div class="alert alert-{{ type }}">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                {{ flashMessage|raw }}
+                </div>
+            {% endfor %}
+          {% endfor %}
+            </div><!--/.row-fluid -->
+      {% endblock %}
+
+      {% block body %}
+            <div class="row-fluid">
+                <div class="span4 offset4" id="login_form">
+                    <table class="table table-condensed table-hover table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Вход в Панель Управления</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {% block fos_user_content %}
+                                    {% endblock fos_user_content %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!--/.row-fluid -->
+      {% endblock %}
+
+      {% block footer %}
+            <footer id="footer">
+                <hr>
+                <p>{% block footer_text %}&copy; Symfony2Admingenerator {{ ("now"|date('Y') > 2012) ? '2012 - ' ~ "now"|date('Y') : '2012' }}{% endblock %}</p>
+            </footer>
+      {% endblock %}
+        </div> <!--/.container-fluid -->
+
+    {% block javascripts %}
+        {% javascripts filter='?yui_js' output='assetic/js/compiled/admingenerator.min.js'
+            'components/bootstrap/js/bootstrap.js'
+            'bundles/admingeneratorgenerator/js/admingenerator/general.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
+    </body>
+</html>

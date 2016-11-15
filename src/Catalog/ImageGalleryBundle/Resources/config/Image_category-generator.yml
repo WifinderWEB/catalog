@@ -1,0 +1,73 @@
+generator: admingenerator.generator.doctrine
+params:
+    model: Catalog\ImageGalleryBundle\Entity\ImageCategory
+    namespace_prefix: Catalog
+    concurrency_lock: ~
+    bundle_name: ImageGalleryBundle
+    pk_requirement: ~
+    fields: ~
+    object_actions:
+        delete: ~
+    batch_actions:
+        delete: ~
+builders:
+    list:
+        params:
+            title: Список галерей изображений
+            display: [id, title, images, is_active ]
+            actions:
+                new: ~
+            object_actions:
+                edit: ~
+                delete: ~
+    filters:
+        params:
+            display: [ title, alias, is_active ]
+    new:
+        params:
+            title: Новая галерея
+            tabs:
+                Base: 
+                    Base: [ is_active, [title, alias]]
+                    Description: [description]
+                Images: 
+                    Form: [  ]
+                    Thumbs: [ images ]
+                More: 
+                    More Parameters: [ sort ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+    edit:
+        params:
+            title: "Редактировать галерею \"%object%\"|{ %object%: ImageCategory.title }|"
+            tabs:
+                Base: 
+                    Base: [ is_active, [title, alias]]
+                    Description: [description]
+                Images: 
+                    Form: [  ]
+                    Thumbs: [ images ]
+                More: 
+                    More Parameters: [ sort ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+                delete: ~
+    show:
+        params:
+            title: "You're viewing the object \"%object%\"|{ %object%: ImageCategory.title }|"
+            display: ~
+            actions:
+                list: ~
+                new: ~
+    actions:
+        params:
+            object_actions:
+                delete: ~
+            batch_actions:
+                delete: ~

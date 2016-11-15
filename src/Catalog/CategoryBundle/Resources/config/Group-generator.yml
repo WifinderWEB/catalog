@@ -1,0 +1,64 @@
+generator: admingenerator.generator.doctrine
+params:
+    model: Catalog\CategoryBundle\Entity\GroupParameters
+    namespace_prefix: Catalog
+    concurrency_lock: ~
+    bundle_name: CategoryBundle
+    pk_requirement: ~
+    fields: ~
+    object_actions:
+        delete: ~
+    batch_actions:
+        delete: ~
+builders:
+    list:
+        params:
+            title: "Список групп параметров"
+            display: ~
+            actions:
+                new: ~
+            object_actions:
+                edit: ~
+                delete: ~
+    excel:
+        params: ~
+        filename: ~
+        filetype: ~
+    filters:
+        params:
+            display: ~
+    new:
+        params:
+            title: "Новая группа параметров"
+            tabs:
+                Base:
+                    Base: [ is_active, title, description ]
+                GroupParameters:
+                    GroupParameters: [ parameter ]
+            actions:
+                save: ~
+                list: ~
+    edit:
+        params:
+            title: "Редактировать группу \"%object%\"|{ %object%: GroupParameters.title }|"
+            tabs:
+                Base:
+                    Base: [ is_active, title, description ]
+                GroupParameters:
+                    GroupParameters: [ parameter ]
+            actions:
+                save: ~
+                list: ~
+    show:
+        params:
+            title: "You're viewing the object \"%object%\"|{ %object%: GroupParameters.title }|"
+            display: ~
+            actions:
+                list: ~
+                new: ~
+    actions:
+        params:
+            object_actions:
+                delete: ~
+            batch_actions:
+                delete: ~

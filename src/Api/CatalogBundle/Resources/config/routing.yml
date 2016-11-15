@@ -1,0 +1,56 @@
+api_catalog_getCategoryByAlias:
+    path:  /api/{project_id}/getCategoryByAlias/{alias}
+    defaults: { _controller: ApiCatalogBundle:Category:getCategoryByAlias }
+
+api_catalog_getPathCategory:
+    path:  /api/{project_id}/getPathCategory/{alias}
+    defaults: { _controller: ApiCatalogBundle:Category:getPathCategory }
+
+api_catalog_getCategoryTree:
+    pattern:  /api/{project_id}/getCategoryTree
+    defaults: { _controller: ApiCatalogBundle:Category:getTree }
+
+api_catalog_search:
+    pattern: /api/{project_id}/search/{query}
+    defaults: { _controller: ApiCatalogBundle:Catalog:search }
+
+api_content_search:
+    pattern: /api/{project_id}/searchContent/{query}
+    defaults: { _controller: ApiCatalogBundle:Category:search }
+
+api_catalog_getList:
+    pattern: /api/{project_id}/getList
+    defaults: { _controller: ApiCatalogBundle:Catalog:getList }
+
+api_catalog_getMenu:
+    pattern: /api/{project_id}/getMenu/{alias}
+    defaults: { _controller: ApiCatalogBundle:Catalog:getMenu }
+
+api_catalog_getTopCategories:
+    pattern:  /api/{project_id}/getCategoriesForLevel/{level}
+    defaults: { _controller: ApiCatalogBundle:Catalog:getCategoriesForLevel }
+    
+api_catalog_getContentByAlias:
+    pattern:  /api/{project_id}/getContentByAlias/{alias}
+    defaults: { _controller: ApiCatalogBundle:Catalog:getContentByAlias }
+
+api_catalog_getItemByAlias:
+    pattern:  /api/{project_id}/getItemByAlias/{alias}
+    defaults: { _controller: ApiCatalogBundle:Content:getContentByAlias }
+
+api_catalog_getContentByIds:
+    pattern:  /api/{project_id}/getContentByIds/{ids}
+    defaults: { _controller: ApiCatalogBundle:Catalog:getContentByIds }
+    
+api_catalog_getBreadcrumbs:
+    pattern:  /api/{project_id}/getBreadcrumbs/{alias}
+    defaults: { _controller: ApiCatalogBundle:Catalog:getBreadcrumbs }
+    
+api_catalog_getTree:
+    pattern:  /api/{project_id}/getTree
+    defaults: { _controller: ApiCatalogBundle:Catalog:getTree }
+
+api_catalog_createOrder:
+    pattern: /api/{project_id}/createOrder
+    defaults: { _controller: ApiCatalogBundle:Order:create }
+    methods: [POST]

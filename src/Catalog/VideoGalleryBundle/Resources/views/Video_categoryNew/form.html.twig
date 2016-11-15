@@ -1,0 +1,48 @@
+{% form_theme form.videos "CatalogVideoGalleryBundle:Template:form.html.twig" %}
+
+{% extends_admingenerated "CatalogVideoGalleryBundle:Video_categoryNew:form.html.twig" %}
+
+{% render(controller( "CatalogContentBundle:Translate:getToken" ))%}
+
+{% block form_alias %}
+    <div class="generate_btn_block"> 
+        <button type="button" id="main_button_translate" class="btn edit_item btn init_tooltip" data-original-title="Сгенерировать псевдоним из заголовка">
+            <i class="icon-fast-forward"></i>
+        </button>
+        <script type="text/javascript">
+            $().ready(function(){
+                var translate = new TranslateModel();
+                translate.Init({
+                    fromFieldId : 'new_videocategory_title', 
+                    toFieldId : 'new_videocategory_alias',
+                    buttonId : 'main_button_translate'
+                });
+                translate.Translate.OnClick();
+            });
+        </script>
+    </div>
+    <div class="generate_alias_block">
+        {{ form_row(form['alias']) }}
+    </div>
+{% endblock form_alias %}
+
+{% block form_fieldset_Form %}
+    <div class="form_block form_fieldset_Form tab-pane">
+        <div class="row-fluid" id="box_image_form">
+
+        </div>
+        <div class="row-fluid">
+            <div class="pull-left btn-toolbar">
+                 <button id="add_image" type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i> Новое видео</button>
+            </div>
+        </div>
+    </div>
+{% endblock form_fieldset_Form %}
+
+{% block form_fieldset_Thumbs %}
+    <div style="display: none">
+        {% block form_videos %}
+            {{ form_row(form['videos']) }}
+        {% endblock form_videos %}
+    </div>
+{% endblock form_fieldset_Thumbs %}

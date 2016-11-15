@@ -1,0 +1,44 @@
+<ul class="thumbnails">
+    {% for project in projects %}
+        <li class="span3">
+            <div class="thumbnail">
+                <img src="{{project.getWebPath| apply_filter('265x149_thumb') }}" alt="{{project.title}}"/>
+                <div class="caption">
+                    <h5>{{ project.title }}</h5>
+                    <div>
+                        {{ project.description|raw }}
+                    </div>
+                </div>
+                <div>
+                    <p><a href="{{path('select_project', {'id': project.id})}}" class="btn">Выбрать</a></p>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+<script type="text/javascript">
+    $().ready(function(){
+        var h = 0;
+        var blocks = $('.caption');
+        var test = 1;
+        var selection;
+        $.each(blocks, function(i){
+            if(test == 1)
+                selection = $(this);
+            else
+                selection.add(this);
+
+            var heightBlock = $(this).height();
+            if(heightBlock > h)
+                h = heightBlock;
+            test++;
+
+            if(test == 3){
+                selection.height(h);
+                test = 1;
+            }
+        });
+        selection.height(h);
+//        blocks.height(h);
+    })
+</script>

@@ -1,0 +1,71 @@
+{% form_theme form.fields "CatalogProjectBundle:Template:form.html.twig" %}
+
+{% extends_admingenerated "CatalogProjectBundle:ProjectNew:form.html.twig" %}
+
+{% render(controller( "CatalogContentBundle:Translate:getToken" ))%}
+
+{% block form_alias %}
+    <div class="generate_btn_block"> 
+        <button type="button" id="main_button_translate" class="btn edit_item btn init_tooltip" data-original-title="Сгенерировать псевдоним из заголовка">
+            <i class="icon-fast-forward"></i>
+        </button>
+        <script type="text/javascript">
+            $().ready(function(){
+                var translate = new TranslateModel();
+                translate.Init({
+                    fromFieldId : 'new_project_title', 
+                    toFieldId : 'new_project_alias',
+                    buttonId : 'main_button_translate'
+                });
+                translate.Translate.OnClick();
+            });
+        </script>
+    </div>
+    <div class="generate_alias_block">
+        {{ form_row(form['alias']) }}
+    </div>
+{% endblock form_alias %}
+
+{% block form_image %}
+    <div class="control-group image">
+        {{ form_label(form['image'])}}
+        <div class="controls">
+            {% if Project.imagePath %}
+                <div class="row-fluid">
+                    <div class="form_field">
+                        <img class="img-polaroid" style="max-width: 140px; max-height: 140px;" src="{{ asset(Project.getWebPath) }}"/>
+                    </div>
+                    <div class="form_field">
+                        {{form_row(form['delete_image'])}}
+                    </div>
+                </div>
+                <br/>
+            {% else %}
+                <div style="display: none">
+                    {{form_row(form['delete_image'])}}
+                </div>
+            {% endif %}
+            {{ form_errors(form['image']) }}
+            {{ form_widget(form['image']) }}
+        </div>
+    </div>
+{% endblock form_image %} 
+
+{% block form_fieldset_Form %}
+    <div class="form_block form_fieldset_Form tab-pane">
+        <div class="row-fluid" id="box_field_form">
+
+        </div>
+        <div class="row-fluid">
+            <div class="pull-left btn-toolbar">
+                 <button id="add_field" type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i> Новое поле</button>
+            </div>
+        </div>
+    </div>
+{% endblock form_fieldset_Form %}
+
+{% block form_fieldset_Fields %}
+    {% block form_fields %}
+        {{ form_widget(form['fields']) }}
+    {% endblock form_fields %}
+{% endblock form_fieldset_Fields %}

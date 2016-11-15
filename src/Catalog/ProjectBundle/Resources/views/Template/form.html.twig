@@ -1,0 +1,111 @@
+{% block collection_widget %}
+{% spaceless %}
+{% if form %}
+<fieldset class="form_block form_fieldset_Fields tab-pane">
+    <legend><span>{% trans from "Admin" %}More Fields{% endtrans %}</span></legend>
+    <div class="collection">
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_errors(form) }}
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Заголовок</th>
+                        <th>Тип поля</th>
+                        <th>Значение по умолчанию</th>
+                        <th>Активно?</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+            {% for field in form %}
+                    <tr id="edit_field_{{field.vars.value.id}}_item" class="list_trow">
+                        <td>{{field.vars.value.title}}</td>
+                        <td>{{field.vars.value.field.title}}</td>
+                        <td>{{field.vars.value.defaultValue}}</td>
+                        <td>
+                        {% if field.vars.value.isActive %}
+                            <i class="icon-ok"></i>
+                        {% else %}
+                            <i class="icon-remove"></i>
+                        {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                            <a onclick="FormAction.editField('edit_field_{{field.vars.value.id}}')" class="btn edit_item btn-mini" data-original-title="Редактировать" rel="tooltip">
+                                <i class="icon-edit"></i>
+                            </a>
+                            <a onclick="FormAction.deleteField('edit_field_{{field.vars.value.id}}')" class="btn btn-danger delete_item btn-mini" data-original-title="Удалить" rel="tooltip">
+                                <i class="icon-remove"></i>
+                            </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="edit_field_{{field.vars.value.id}}_form" style="display: none">
+                        <td colspan="6">
+                            <fieldset class="form_block form_fieldset_Form tab-pane" id="image-__name__">
+                                <legend><span>{% trans from "Admin" %}Edit field{% endtrans %} "{{field.vars.value.title}}"</span></legend>
+                                <div class="row-fluid">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 25%">{{ form_row(field['is_active']) }}</td>
+                                            <td style="width: 25%">{{ form_row(field['title']) }}</td>
+                                            <td rowspan="2" style="width: 25%">{{ form_row(field['default_value'], {'attr': {'class':'image_description'}}) }}</td>
+                                            <td style="width: 25%">{{ form_row(field['sort']) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ form_row(field['field']) }}</td>
+                                            <td>{{ form_row(field['alias']) }}</td>
+                                            
+                                            <td>
+                                                <a onclick="FormAction.deleteField('edit_field_{{field.vars.value.id}}')" class="btn btn-danger delete_item delete_field">
+                                                    <i class="icon-remove"></i> Удалить
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</fieldset>
+{% endif %}
+{% endspaceless %}
+{% endblock collection_widget %}
+
+{% block collection_item_widget %}
+{% spaceless %}
+<fieldset class="form_block form_fieldset_Form tab-pane" id="field-__name__">
+    <legend><span>{% trans from "Admin" %}New field{% endtrans %}</span></legend>
+    <div class="row-fluid">
+        <table>
+            <tr>
+                <td style="width: 25%">{{ form_row(prototype['is_active']) }}</td>
+                <td style="width: 25%">{{ form_row(prototype['title']) }}</td>
+                <td rowspan="2" style="width: 25%">{{ form_row(prototype['default_value'], {'attr': {'class':'image_description'}}) }}</td>
+                <td style="width: 25%">{{ form_row(prototype['sort']) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_row(prototype['field']) }}</td>
+                <td>{{ form_row(prototype['alias']) }}</td>
+                
+                <td>
+                    <a onclick="FormAction.deleteItem('field-__name__')" class="btn btn-danger delete_item">
+                        <i class="icon-remove"></i> Удалить
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</fieldset>
+{% endspaceless %}
+{% endblock collection_item_widget %}

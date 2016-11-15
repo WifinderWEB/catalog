@@ -1,0 +1,65 @@
+generator: admingenerator.generator.doctrine
+params:
+    model: Catalog\FileGalleryBundle\Entity\FileCategory
+    namespace_prefix: Catalog
+    concurrency_lock: ~
+    bundle_name: FileGalleryBundle
+    pk_requirement: ~
+    fields: ~
+    object_actions:
+        delete: ~
+    batch_actions:
+        delete: ~
+builders:
+    list:
+        params:
+            title: Список категории файлов
+            display: [ id, title, is_active ]
+            actions:
+                new: ~
+            object_actions:
+                edit: ~
+                delete: ~
+    filters:
+        params:
+            display: [ title, alias, is_active ]
+    new:
+        params:
+            title: Новая категория файлов
+            tabs:
+                Base:
+                    Base: [ is_active, [title, alias], description ]
+                More:
+                    More: [ sort ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+    edit:
+        params:
+            title: "Редактировать категорию \"%object%\"|{ %object%: FileCategory.title }|"
+            tabs:
+                Base:
+                    Base: [ is_active, [title, alias], description ]
+                More:
+                    More: [ sort ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+                delete: ~
+    show:
+        params:
+            title: "You're viewing the object \"%object%\"|{ %object%: FileCategory.title }|"
+            display: ~
+            actions:
+                list: ~
+                new: ~
+    actions:
+        params:
+            object_actions:
+                delete: ~
+            batch_actions:
+                delete: ~

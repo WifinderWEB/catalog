@@ -1,0 +1,73 @@
+{% extends_admingenerated "CatalogOrderBundle:OrderEdit:form.html.twig" %}
+
+{% block form_created %}
+    <div class="control-group form_field field_datetime field_created">
+        <div class="control-group created">
+            <label class="control-label required">{% trans from "Admin" %}Created{% endtrans %}</label>
+            <div class="controls">
+                <div id="edit_order_created">
+                    <div id="edit_order_created_date">
+                        <span class="text-info">{{ Order.created|date('d.m.Y H:i:s') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock form_created %}
+
+{% block form_updated %}
+    <div class="control-group form_field field_datetime field_updated">
+        <div class="control-group updated">
+            <label class="control-label required">{% trans from "Admin" %}Updated{% endtrans %}</label>
+            <div class="controls">
+                <div id="edit_order_updated">
+                    <div id="edit_order_updated_date">
+                        <span class="text-info">{{ Order.updated|date('d.m.Y H:i:s') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock form_updated %}
+
+ {% block form_fieldset_Goods %}
+     <fieldset class="form_block form_fieldset_Goods tab-pane">
+         <legend><span>{% trans from "Admin" %}Goods{% endtrans %}</span></legend>
+         <div class="row-fluid">
+             <div class="control-group form_field field_collection field_goods">
+                 {% block form_goods %}
+                     <table class="table">
+                         <thead>
+                             <tr class="info">
+                                 <th>{% trans from "Admin" %}ID{% endtrans %}</th>
+                                 <th>{% trans from "Admin" %}Thumb{% endtrans %}</th>
+                                 <th>{% trans from "Admin" %}Title{% endtrans %}</th>
+                                 <th>{% trans from "Admin" %}Article{% endtrans %}</th>
+                                 <th>{% trans from "Admin" %}Price{% endtrans %}</th>
+                                 <th>{% trans from "Admin" %}Discount{% endtrans %}</th>
+                                 <th>{% trans from "Admin" %}Count{% endtrans %}</th>
+                                 <th>{% trans from "Admin" %}Actions{% endtrans %}</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             {% for item in Order.goods %}
+                                 <tr>
+                                     <td>{{ item.goodsId }}</td>
+                                     <td>
+                                         <img src="//{{ item.imagePath }}" alt="{{ item.altImage }}" class="img-polaroid"/>
+                                     </td>
+                                     <td>{{ item.title }}</td>
+                                     <td>{{ item.article }}</td>
+                                     <td>{{ item.price }}</td>
+                                     <td>{{ item.discount }}</td>
+                                     <td>{{ item.count }}</td>
+                                     <td></td>
+                                 </tr>
+                             {% endfor %}
+                         </tbody>
+                     </table>
+                 {% endblock form_goods %}
+             </div>
+         </div>
+     </fieldset>
+ {% endblock form_fieldset_Goods %}

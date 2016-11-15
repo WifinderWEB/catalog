@@ -1,0 +1,80 @@
+{% extends_admingenerated "CatalogVideoGalleryBundle:Video_categoryList:results.html.twig" %}
+
+{% block list_thead %}
+<thead>
+    <tr class="list_thead">
+        <th class="list_thead_column{% if 1 %} sortable{% if sortColumn == 'id' and sortOrder == 'ASC' %} sort_asc{% elseif sortColumn == 'id' and sortOrder == 'DESC' %} sort_desc{% endif %}{% endif %}">
+            <span class="sort-span">
+            {% if sortColumn == 'id' and sortOrder == 'ASC' %}
+                <a href="?sort=id&order_by=desc">
+            {% else %}
+                <a href="?sort=id&order_by=asc">
+            {% endif %}
+                {{ 'Id'|trans({}, 'Admin') }}</a>
+                {% if sortColumn == 'id' %}
+                    {% if sortColumn == 'id' and sortOrder == 'ASC' %}
+                        <i class="icon-sort-by-order active"></i>
+                        <i class="icon-sort-by-order-alt hover"></i>
+                    {% else %}
+                        <i class="icon-sort-by-order hover"></i>
+                        <i class="icon-sort-by-order-alt active"></i>
+                    {% endif %}
+                {% else %}
+                    <i class="icon-sort-by-order placeholder hover"></i>
+                {% endif %}
+            </span>
+        </th>
+
+        <th class="list_thead_column{% if 1 %} sortable{% if sortColumn == 'title' and sortOrder == 'ASC' %} sort_asc{% elseif sortColumn == 'title' and sortOrder == 'DESC' %} sort_desc{% endif %}{% endif %}">
+            <span class="sort-span">
+            {% if sortColumn == 'title' and sortOrder == 'ASC' %}
+                <a href="?sort=title&order_by=desc">
+            {% else %}
+                    <a href="?sort=title&order_by=asc">
+            {% endif %}
+                {{ 'Title'|trans({}, 'Admin') }}</a>
+                {% if sortColumn == 'title' %}
+                    {% if sortColumn == 'title' and sortOrder == 'ASC' %}
+                        <i class="icon-sort-by-alphabet active"></i>
+                        <i class="icon-sort-by-alphabet-alt hover"></i>
+                    {% else %}
+                        <i class="icon-sort-by-alphabet hover"></i>
+                        <i class="icon-sort-by-alphabet-alt active"></i>
+                    {% endif %}
+                {% else %}
+                        <i class="icon-sort-by-alphabet placeholder hover"></i>
+                {% endif %}
+            </span>
+        </th>
+
+
+        <th class="list_thead_column">
+            Первые 3 видео
+        </th>
+
+        <th class="list_thead_column{% if 1 %} sortable{% if sortColumn == 'is_active' and sortOrder == 'ASC' %} sort_asc{% elseif sortColumn == 'is_active' and sortOrder == 'DESC' %} sort_desc{% endif %}{% endif %}">
+            <span class="sort-span">
+            {% if sortColumn == 'is_active' and sortOrder == 'ASC' %}
+                <a href="?sort=is_active&order_by=desc">
+            {% else %}
+                <a href="?sort=is_active&order_by=asc">
+            {% endif %}
+                {{ 'Is active'|trans({}, 'Admin') }}</a>
+                {% if sortColumn == 'is_active' %}
+                    {% if sortColumn == 'is_active' and sortOrder == 'ASC' %}
+                        <i class="icon-sort-by-attributes active"></i>
+                        <i class="icon-sort-by-attributes-alt hover"></i>
+                    {% else %}
+                        <i class="icon-sort-by-attributes hover"></i>
+                        <i class="icon-sort-by-attributes-alt active"></i>
+                    {% endif %}
+                {% else %}
+                    <i class="icon-sort-by-attributes placeholder hover"></i>
+                {% endif %}
+            </span>
+        </th>
+
+        <th class="actions">{% trans from "Admingenerator" %}list.header.actions{% endtrans %}</th>
+    </tr>
+</thead>
+{% endblock list_thead %}

@@ -1,0 +1,125 @@
+generator: admingenerator.generator.doctrine
+params:
+    model: Catalog\ContentBundle\Entity\Content
+    namespace_prefix: Catalog
+    concurrency_lock: ~
+    bundle_name: ContentBundle
+    pk_requirement: ~
+    fields:
+        image:
+            dbType: string
+            formType: file
+        big_image:
+            dbType: string
+            formType: file
+        delete_image:
+            formType: boolean
+        delete_big_image:
+            formType: boolean 
+        more:
+            dbType: collection
+        group_parameters:
+            dbType: collection
+    object_actions:
+        delete: ~
+    batch_actions:
+        delete: ~
+builders:
+    list:
+        params:
+            title: Контент
+            display: [id, title,  is_active]
+            actions:
+                new: ~
+            object_actions:
+                edit: ~
+                clone:
+                    label:    Сделать копию
+                    icon:     icon-copy
+                    route:    Catalog_ContentBundle_Content_clone
+                    params:
+                        id: "{{Content.id}}"
+                delete: ~
+    filters:
+        params:
+            display: [title, alias, catalogs, tags, is_active]
+    new:
+        params:
+            title: Новый контент
+            tabs:
+                Base: 
+                    Base: [ is_active, title, alias ]
+                    Anons: [ image, anons ]
+                    Full Description: [ big_image, content ]
+                    More Fields: [ more ]
+                Tags:
+                    Tags: [ tags ]
+                Category:
+                    Category: [ category ]
+                Galleries:
+                    Images: [ image_gallery ]
+                    Video:  [ video_gallery ]
+                Files:
+                    Files: [ files ]
+                Related:
+                    Related: [ related ]
+                Sale:
+                    Price: [ sale ]
+                    Parameters: []
+                    Barcode: []
+                Stocks:
+                    Stocks: []
+                SEO:
+                    Meta data: [ meta ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+    edit:
+        params:
+            title: "Редактирование контента \"%object%\"|{ %object%: Content.title }|"
+            tabs:
+                Base: 
+                    Base: [ is_active, title, alias]
+                    Anons: [ image, anons ]
+                    Full Description: [ big_image, content ]
+                    More Fields: [ more ]
+                Tags:
+                    Tags: [ tags ]
+                Category:
+                    Category: [ category, group_parameters ]
+                Galleries:
+                    Images: [ image_gallery ]
+                    Video:  [ video_gallery ]
+                Files:
+                    Files: [ files ]
+                Related:
+                    Related: [ related ]
+                Sale:
+                    Price: [ sale ]
+                    Parameters: []
+                    Barcode: []
+                Stocks:
+                    Stocks: []
+                SEO:
+                    Meta data: [ meta ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+                delete: ~
+    show:
+        params:
+            title: "You're viewing the object \"%object%\"|{ %object%: Content.title }|"
+            display: ~
+            actions:
+                list: ~
+                new: ~
+    actions:
+        params:
+            object_actions:
+                delete: ~
+            batch_actions:
+                delete: ~

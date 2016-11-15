@@ -1,0 +1,18 @@
+{% extends_admingenerated "CatalogFileGalleryBundle:FileEdit:form.html.twig" %}
+
+{% block form_file %}
+    <div class="control-group image">
+        {{ form_label(form['file'])}}
+        <div class="controls">
+            {% if File.path %}
+                <div class="row-fluid">
+                    <div class="form_field">
+                        <a href="{{ path('CatalogFileGalleryBundle_get_file', { 'id': File.id }) }}">{{File.originName}}</a>
+                    </div>
+                </div>
+            {% endif %}
+            {{ form_errors(form['file']) }}
+            {{ form_widget(form['file']) }}
+        </div>
+    </div>
+{% endblock form_file %} 

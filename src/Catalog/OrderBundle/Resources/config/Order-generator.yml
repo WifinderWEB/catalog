@@ -1,0 +1,64 @@
+generator: admingenerator.generator.doctrine
+params:
+    model: Catalog\OrderBundle\Entity\Order
+    namespace_prefix: Catalog
+    concurrency_lock: ~
+    bundle_name: OrderBundle
+    pk_requirement: ~
+    fields: ~
+    object_actions:
+        delete: ~
+    batch_actions:
+        delete: ~
+builders:
+    list:
+        params:
+            title: Список заказов
+            display: [id, created, status, full_name, itog, is_active ]
+            actions: []
+            object_actions:
+                edit: ~
+                delete: ~
+    excel:
+        params: ~
+        filename: ~
+        filetype: ~
+    filters:
+        params:
+            display: [ lastName, firstName, middleName, phone, email, created, status, is_active ]
+    new:
+        params:
+            title: New object for OrderBundle
+            display:
+            actions:
+                save: ~
+                list: ~
+    edit:
+        params:
+            title: "Редактировать заказ \"%object%\"|{ %object%: Order.id }|"
+            tabs:
+                Base:
+                    Base: [[is_active], [created, updated], [status]]
+                    Order: [[itog, discount], [stock]]
+                    Goods: [goods]
+                User:
+                    Personal data: [[lastName, firstName, middleName] ]
+                    Contacts: [[email, phone]]
+                    Address: [[country, region, city], [street, house, room], [postcode]]
+
+            actions:
+                save: ~
+                list: ~
+    show:
+        params:
+            title: "You're viewing the object \"%object%\"|{ %object%: Order.id }|"
+            display: ~
+            actions:
+                list: ~
+                new: ~
+    actions:
+        params:
+            object_actions:
+                delete: ~
+            batch_actions:
+                delete: ~

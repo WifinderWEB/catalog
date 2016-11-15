@@ -1,0 +1,61 @@
+generator: admingenerator.generator.doctrine
+params:
+    model: Catalog\StockBundle\Entity\Stock
+    namespace_prefix: Catalog
+    concurrency_lock: ~
+    bundle_name: StockBundle
+    pk_requirement: ~
+    fields: ~
+    object_actions:
+        delete: ~
+    batch_actions:
+        delete: ~
+builders:
+    list:
+        params:
+            title: Склады
+            display: [ id, title, address, is_active ]
+            actions:
+                new: ~
+            object_actions:
+                edit: ~
+                delete: ~
+    excel:
+        params: ~
+        filename: ~
+        filetype: ~
+    filters:
+        params:
+            display: [title, is_active]
+    new:
+        params:
+            title: Новый склад
+            display: [ is_active, title, address, lat, lng ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+    edit:
+        params:
+            title: "Редактировать склад \"%object%\"|{ %object%: Stock.title }|"
+            display: [ is_active, title, address, lat, lng ]
+            actions:
+                save: ~
+                save-and-add: ~
+                save-and-list: ~
+                list: ~
+                delete: ~
+    show:
+        params:
+            title: "You're viewing the object \"%object%\"|{ %object%: Stock.title }|"
+            display: ~
+            actions:
+                list: ~
+                new: ~
+    actions:
+        params:
+            object_actions:
+                delete: ~
+            batch_actions:
+                delete: ~

@@ -1,0 +1,5 @@
+<ul class="nav">
+{% for item in items %}
+    {% include 'CatalogCatalogBundle:Menu:_mainSubMenu.html.twig' with {'item': item, 'subMenu' : 0}%}
+{% endfor %}
+</ul>

@@ -1,0 +1,3 @@
+catalog_category_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CatalogCategoryBundle:Default:index }

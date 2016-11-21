@@ -1,3 +1,11 @@
+api_catalog_getProjectList:
+    path: /api/getProjectList
+    defaults: { _controller: ApiCatalogBundle:Project:getProjectList }
+
+api_catalog_getTreeByAlias:
+    path: /api/getTreeByAlias/{alias}
+    defaults: { _controller: ApiCatalogBundle:Catalog:getTreeByAlias }
+
 api_catalog_getCategoryByAlias:
     path:  /api/{project_id}/getCategoryByAlias/{alias}
     defaults: { _controller: ApiCatalogBundle:Category:getCategoryByAlias }
@@ -29,6 +37,10 @@ api_catalog_getMenu:
 api_catalog_getTopCategories:
     pattern:  /api/{project_id}/getCategoriesForLevel/{level}
     defaults: { _controller: ApiCatalogBundle:Catalog:getCategoriesForLevel }
+
+api_catalog_getTopCategoriesByAlias:
+    pattern:  /api/{alias}/getCategoriesForLevelByAlias/{level}
+    defaults: { _controller: ApiCatalogBundle:Catalog:getCategoriesForLevelByAlias }
     
 api_catalog_getContentByAlias:
     pattern:  /api/{project_id}/getContentByAlias/{alias}

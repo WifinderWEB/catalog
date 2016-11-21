@@ -60,6 +60,49 @@ class CatalogController extends Controller {
         return new JsonResponse($result);
     }
 
+    public function getCategoriesForLevelByAliasAction($alias, $level = 0) {
+        $parentAlias = null;
+        $parent = null;
+        $items = array();
+
+        $project = $this->getDoctrine()->getRepository('CatalogProjectBundle:Project')->findOneBy(array(
+            'alias' => $alias,
+            'is_active' => true
+        ));
+
+        if(!$project || $project->getJoinCatalog()->count() == 0)
+            $result = $this->error404();
+        else {
+            $catalogItems = $this->getRepository()->getCategoriesForLevel($project->getId(), $alias, $level);
+            if ($catalogItems) {
+                $testParent = true;
+                foreach ($catalogItems as $c) {
+                    $items[] = $this->clearItemForListOfNulls($c);
+
+                    if (!$parent)
+                        $parent = $c->getParent();
+
+                    if ($parent->getId() != $c->getParent()->getId())
+                        $testParent = false;
+                }
+
+                if ($testParent) {
+                    $parent2 = $this->clearItemForListOfNulls($parent) + $this->clearMetaOfNulls($parent->getMeta());
+                    if ($parent->getContent() && $parent->getContent()->getMeta())
+                        $parent2 = array_replace_recursive($parent2, $this->clearMetaOfNulls($parent->getContent()->getMeta()));
+                } else
+                    $parent2 = array();
+
+                $result = array('result' => array('items' => $items, 'parent' => $parent2));
+            }
+            if (!$catalogItems && !$parent) {
+                $result = $this->error404();
+            }
+
+        }
+        return new JsonResponse($result);
+    }
+
     /*
      * $project_id - ID проекта
      * $alias - псевдоним каталога
@@ -255,6 +298,38 @@ class CatalogController extends Controller {
             $result = array('result' => array('items' => $catalogs));
         } else {
             $result = $this->error404();
+        }
+
+        return new JsonResponse($result);
+    }
+
+    public function getTreeByAliasAction($alias){
+        $info = false;
+        $project = $this->getDoctrine()->getRepository('CatalogProjectBundle:Project')->findOneBy(array(
+            'alias' => $alias,
+            'is_active' => true
+        ));
+        if ($p = $this->get('request')->query->get('project_info'))
+            $info = true;
+
+        if(!$project || $project->getJoinCatalog()->count() == 0)
+            $result = $this->error404();
+        else {
+            $catalogs = $this->getTree($project->getId(), $alias, 3);
+
+            if ($catalogs) {
+                $result = array('result' => array('items' => $catalogs));
+                if($info)
+                    $result['result']['project'] = array(
+                        'id' => $project->getId(),
+                        'title' => $project->getTitle(),
+                        'alias' => $project->getAlias(),
+                        'description' => $project->getDescription(),
+                        'image_path' => $this->get('request')->getHost() . '' . $project->getWebPath(),
+                    );
+            } else {
+                $result = $this->error404();
+            }
         }
 
         return new JsonResponse($result);

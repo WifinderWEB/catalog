@@ -25,10 +25,6 @@ class User extends BaseUser
     /**
      *
      * @ORM\Column(type="string", length=225, nullable=true)
-     * @Assert\Regex( 
-     *       pattern="/^[a-zA-Zа-яА-ЯёЁ]+$/",
-     *       message="Field can contain only letters."
-     * )
      */
     protected $full_name;
     
@@ -45,6 +41,11 @@ class User extends BaseUser
      * )
      */
     protected $projects;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Catalog\OrderBundle\Entity\Order", mappedBy="user", cascade={"remove", "persist"})
+     */
+    protected $orders;
     
     /**
      * @var boolean
@@ -150,5 +151,38 @@ class User extends BaseUser
     public function getProjects()
     {
         return $this->projects;
+    }
+
+    /**
+     * Add orders
+     *
+     * @param \Catalog\OrderBundle\Entity\Order $orders
+     * @return User
+     */
+    public function addOrder(\Catalog\OrderBundle\Entity\Order $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \Catalog\OrderBundle\Entity\Order $orders
+     */
+    public function removeOrder(\Catalog\OrderBundle\Entity\Order $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

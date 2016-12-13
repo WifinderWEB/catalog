@@ -305,8 +305,12 @@ class CatalogController extends Controller {
 
     public function getTreeByAliasAction($alias){
         $info = false;
+        $brand = $alias;
+        if($this->get('request')->query->get('brand'))
+            $brand = $this->get('request')->query->get('brand');
+
         $project = $this->getDoctrine()->getRepository('CatalogProjectBundle:Project')->findOneBy(array(
-            'alias' => $alias,
+            'alias' => $brand,
             'is_active' => true
         ));
         if ($p = $this->get('request')->query->get('project_info'))

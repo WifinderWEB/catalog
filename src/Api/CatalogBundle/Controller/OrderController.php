@@ -69,9 +69,9 @@ class OrderController extends Controller {
     private function getBodyMessage(\Catalog\OrderBundle\Entity\Order $entity){
         $body = "<h1>Заказ №" . $entity->getId() .'" от ' . $entity->getCreated()->format('d.m.Y H:i:s') . '</h1>'.
         "<p>
-            <b>Пользователь: </b> ".$entity->getFullName() . "<br/>
-            <b>Телефон: </b> " . $entity->getPhone(). "<br/>
-            <b>Email: </b> " . $entity->getEmail(). "<br/>
+            <b>Пользователь: </b> ".$entity->getUser()->getFullName() . "<br/>
+            <b>Телефон: </b> " . $entity->getUser()->getPhone(). "<br/>
+            <b>Email: </b> " . $entity->getUser()->getEmail(). "<br/>
             <b>Адрес: </b> " . $entity->getAddress() . "<br/>
         </p>
         <p>
@@ -100,7 +100,7 @@ class OrderController extends Controller {
             ->setSubject("Новый заказ")
             ->setContentType('text/html')
             ->setFrom($this->container->getParameter('mailer_mail_from'))
-            ->setTo($entity->getEmail())
+            ->setTo($entity->getUser()->getEmail())
             ->setBody($body);
         $mailer->send($message);
     }
@@ -111,9 +111,9 @@ class OrderController extends Controller {
             Ваш заказ успешно создан. В ближайшее время с Вами свяжется наш оператор.
         </p>
         <p>
-            <b>Пользователь: </b> ".$entity->getFullName() . "<br/>
-            <b>Телефон: </b> " . $entity->getPhone(). "<br/>
-            <b>Email: </b> " . $entity->getEmail(). "<br/>
+            <b>Пользователь: </b> ".$entity->getUser()->getFullName() . "<br/>
+            <b>Телефон: </b> " . $entity->getUser()->getPhone(). "<br/>
+            <b>Email: </b> " . $entity->getUser()->getEmail(). "<br/>
             <b>Адрес: </b> " . $entity->getAddress() . "<br/>
         </p>
         <p>

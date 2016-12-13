@@ -25,7 +25,7 @@ builders:
         filetype: ~
     filters:
         params:
-            display: [ lastName, firstName, middleName, phone, email, created, status, is_active ]
+            display: [created, status, is_active ]
     new:
         params:
             title: New object for OrderBundle
@@ -42,7 +42,7 @@ builders:
                     Order: [[itog, discount], [stock]]
                     Goods: [goods]
                 User:
-                    Personal data: [[lastName, firstName, middleName] ]
+                    Personal data: [[] ]
                     Contacts: [[email, phone]]
                     Address: [[country, region, city], [street, house, room], [postcode]]
 

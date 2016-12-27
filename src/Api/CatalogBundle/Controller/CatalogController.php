@@ -321,8 +321,22 @@ class CatalogController extends Controller {
         else {
             $catalogs = $this->getTree($project->getId(), $alias, 3);
 
+            $content = $this->getRepository()->findOneBy(array(
+                'alias' => $alias
+            ));
+
             if ($catalogs) {
                 $result = array('result' => array('items' => $catalogs));
+                $result['result']['content'] = array(
+                    'id' => $content->getId(),
+                    'title' => $content->getTitle(),
+                    'alias' => $content->getAlias()
+                );
+                if($content->getContent())
+                    $result['result']['content']['content'] = $this->clearContentOfNulls(array(), $content->getContent());
+                if($content->getMeta())
+                    $result['result']['content'] = $result['result']['content'] + $this->clearMetaOfNulls($content->getMeta());
+
                 if($info)
                     $result['result']['project'] = array(
                         'id' => $project->getId(),

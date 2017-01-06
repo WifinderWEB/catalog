@@ -62,14 +62,25 @@ class ContentRepository extends EntityRepository
             ->where('c.project = :project')
             ->andWhere('c.category = :category')
             ->setParameter('project', $projectId)
-            ->setParameter('category', $category);
+            ->setParameter('category', $category)
+        ;
 
         if($filter){
             if(isset($filter['group_parameters']) && $filter['group_parameters']){
-                $groupParams = explode(',', $filter['group_parameters']);
 
-                $query = $query->leftJoin('c.parameters', 'p')
-                    ->andWhere($q->expr()->in('p.id', $groupParams));
+                $groupParams = json_decode($filter['group_parameters']);
+
+                foreach($groupParams as $i => $one) {
+
+                    $str = array();
+                    foreach($one as $param){
+                        $str[] = 'p'.$i.'.id='.$param;
+                    }
+
+                    $query = $query->leftJoin('c.parameters', 'p'.$i)
+                        ->andWhere(implode(' OR ', $str))
+                    ;
+                }
             }
             if(isset($filter['sort_by']) && $filter['sort_by']){
                 if($filter['sort_by'] == 'title_asc'){

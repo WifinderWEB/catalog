@@ -319,7 +319,7 @@ class CatalogController extends Controller {
         if(!$project || $project->getJoinCatalog()->count() == 0)
             $result = $this->error404();
         else {
-            $catalogs = $this->getTree($project->getId(), $alias, 3);
+            $catalogs = $this->getTree($project->getId(), $alias, 3, true);
 
             $content = $this->getRepository()->findOneBy(array(
                 'alias' => $alias
@@ -332,6 +332,14 @@ class CatalogController extends Controller {
                     'title' => $content->getTitle(),
                     'alias' => $content->getAlias()
                 );
+
+                if($this->get('request')->query->get('with_filters')){
+                    $filters = $this->getFilters($project->getId(), $alias);
+
+                    $result['result']['filters'] = $filters;
+                }
+
+
                 if($content->getContent())
                     $result['result']['content']['content'] = $this->clearContentOfNulls(array(), $content->getContent());
                 if($content->getMeta())
@@ -351,6 +359,49 @@ class CatalogController extends Controller {
         }
 
         return new JsonResponse($result);
+    }
+
+    private function getFilters($project_id, $alias){
+        $catalogs = $this->getRepository()->getTree($project_id, $alias, 3);
+
+        $filters = array();
+
+        foreach($catalogs as $one){
+            if($content = $one->getContent()){
+                if($category = $content->getCategory()){
+                    $filters = $this->getFiltersForCategory($filters, $category);
+                }
+            }
+        }
+
+        return $filters;
+    }
+
+    private function getFiltersForCategory($filters, $category){
+
+        foreach($category->getGroups() as $group){
+            if($group->getIsActive()) {
+                $parameters = array();
+
+                foreach ($group->getParameter() as $one) {
+                    if ($one->getIsActive()) {
+                        $parameters[] = array(
+                            'id' => $one->getId(),
+                            'alias' => $one->getAlias(),
+                            'title' => $one->getTitle(),
+                            'count' => $one->getContent()->count()
+                        );
+                    }
+                }
+
+                $filters[$group->getId()] = array(
+                    'title' => $group->getTitle(),
+                    'parameters' => $parameters
+                );
+            }
+        }
+
+        return $filters;
     }
 
     public function getBreadcrumbsAction($project_id, $alias) {

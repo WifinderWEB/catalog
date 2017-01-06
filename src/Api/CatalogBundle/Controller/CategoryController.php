@@ -208,7 +208,7 @@ class CategoryController extends Controller
     }
 
     private function getContentByCategory($projectId, $category, $filter){
-        $total = $this->getDoctrine()->getRepository('CatalogContentBundle:Content')->getQueryContentByCategory($projectId, $category, $filter)->select('COUNT(c)')
+        $total = $this->getDoctrine()->getRepository('CatalogContentBundle:Content')->getQueryContentByCategory($projectId, $category, $filter)->select('COUNT(DISTINCT c.id)')
             ->getQuery()
             ->getSingleScalarResult();
 

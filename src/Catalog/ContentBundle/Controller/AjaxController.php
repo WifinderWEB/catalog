@@ -2,6 +2,8 @@
 
 namespace Catalog\ContentBundle\Controller;
 
+use Catalog\ContentBundle\Entity\Category;
+use Catalog\ContentBundle\Form\ContentParametersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Catalog\ContentBundle\lib\AccessTokenAuthentication;
 
@@ -80,4 +82,22 @@ class AjaxController extends Controller {
         }
     }
 
+    public function getGroupParametersAction(){
+        $id = $this->get('request')->query->get('id');
+        $category = $this->getDoctrine()->getRepository('CatalogCategoryBundle:Category')->find($id);
+        if($category){
+            $pattern = new Category();
+            $pattern->setCategory($category);
+
+            $type = new ContentParametersType($pattern);
+            $form = $this->createForm($type);
+
+            return $this->render('CatalogContentBundle:ContentEdit:_parameters_form.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
+
+        return $this->render('CatalogContentBundle:ContentEdit:_parameters_form.html.twig', array(
+        ));
+    }
 }

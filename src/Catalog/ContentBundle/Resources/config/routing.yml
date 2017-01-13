@@ -5,3 +5,7 @@ catalog_content_homepage:
 get_translate:
     pattern:  /ajax/{text}
     defaults: { _controller: CatalogContentBundle:Ajax:index }
+
+get_group_parameters:
+    path: /get_group_parameters
+    defaults: { _controller: CatalogContentBundle:Ajax:getGroupParameters }

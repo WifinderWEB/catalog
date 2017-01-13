@@ -108,6 +108,9 @@ CatalogContentBundle_admin_catalog_content_bundle_content:
     resource: "@CatalogContentBundle/Controller/Content/"
     type:     admingenerator
     prefix:   /admin/content
+CatalogContentBundle_admin_catalog_content_bundle_content_2:
+    resource: "@CatalogContentBundle/Resources/config/routing.yml"
+    prefix:   /admin/content
 
 Catalog_CatalogBundle_Catalog_move_up:
     pattern:   /admin/catalog/{id}/move_up

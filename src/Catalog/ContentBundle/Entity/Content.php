@@ -224,12 +224,20 @@ class Content {
     protected $parameters;
 
     /**
-     * @var datetime $created
+     * @var datetime $created_at
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
-    protected $created;
+    protected $created_at;
+
+    /**
+     * @var datetime $created_at
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    protected $updated_at;
 
     /**
      * Constructor
@@ -1278,25 +1286,48 @@ class Content {
     }
 
     /**
-     * Set created
+     * Set updated_at
      *
-     * @param \DateTime $created
+     * @param \DateTime $updated_at
      * @return Content
      */
-    public function setCreated($created)
+    public function setUpdatedAt($updated_at)
     {
-        $this->created = $created;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getCreated()
+    public function getUpdatedAt()
     {
-        return $this->created;
+        return $this->updated_at;
+    }
+
+    /**
+     * Set $created_at
+     *
+     * @param \DateTime $created_at
+     * @return Content
+     */
+    public function setCreatedAt($created_at)
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
     }
 }

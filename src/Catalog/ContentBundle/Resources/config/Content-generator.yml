@@ -28,7 +28,7 @@ builders:
     list:
         params:
             title: Контент
-            display: [id, title,  is_active]
+            display: [id, title, category,  is_active]
             actions:
                 new: ~
             object_actions:

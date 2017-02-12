@@ -90,7 +90,7 @@ class AjaxController extends Controller {
             $pattern->setCategory($category);
 
             $type = new ContentParametersType($pattern);
-            $form = $this->createForm($type);
+            $form = $this->createForm($type, null, array('csrf_protection' => false));
 
             return $this->render('CatalogContentBundle:ContentEdit:_parameters_form.html.twig', array(
                 'form' => $form->createView(),

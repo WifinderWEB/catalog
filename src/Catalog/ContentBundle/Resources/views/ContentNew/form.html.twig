@@ -244,3 +244,59 @@
         </script>
     </fieldset>
 {% endblock form_fieldset_MetaData %}
+
+{% block form_fieldset_Category %}
+    <fieldset class="form_block form_fieldset_Category tab-pane">
+        <legend><span>{% trans from "Admin" %}Category{% endtrans %}</span></legend>
+        <div class="row-fluid">
+            <div class="control-group form_field field_entity field_category">
+                {% block form_category %}
+                    {{ form_row(form['category']) }}
+                {% endblock form_category %}
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="control-group form_field field_collection field_group_parameters">
+                {% block form_group_parameters %}
+                    {% if form['group_parameters'] is defined %}
+                        {{ form_row(form['group_parameters']) }}
+                    {% else %}
+                        <div class="control-group group_parameters">
+                            <label class="control-label required">Group parameters</label>
+                            <div class="controls">
+                                <div id="edit_content_group_parameters">
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endblock form_group_parameters %}
+            </div>
+        </div>
+        <script type="text/javascript">
+            $().ready(function(){
+                $('select[id$=content_category]').change(function(){
+                    var id = $(this).val();
+                    $.ajax({
+                        url: '{{ path('get_group_parameters') }}',
+                        data: {id: id},
+                        dataType: 'html',
+                        timeout: 5000,
+                        error: function(err){
+                            console.log(err);
+                        },
+                        success: function(mess){
+                            var pattern = /group_parameters\[/g;
+                            var str = mess.replace(pattern, 'new_content[group_parameters][');
+                            str = str.replace(new RegExp('group_parameters_', 'g'), 'new_content_group_parameters_');
+
+                            $('#edit_content_group_parameters').html(str);
+                            FormAction.multiselect();
+                        }
+                    })
+                });
+            });
+        </script>
+
+    </fieldset>
+{% endblock form_fieldset_Category %}

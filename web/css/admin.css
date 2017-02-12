@@ -154,3 +154,10 @@ input[id$=title], input[id$=alias], input[id$=address], input[id$=description], 
 #edit_catalog_group_parameters .control-group{
     height: 400px;
 }
+.td_category .dl-horizontal{
+    margin: 0;
+}
+.table td.td_category .dl-horizontal dt, .table td.td_category .dl-horizontal dd{
+    font-size: 80%;
+    line-height: 14px;
+}

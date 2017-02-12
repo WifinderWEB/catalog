@@ -4,6 +4,7 @@ namespace Catalog\ContentBundle\Form\Type\Content;
 
 use Catalog\CategoryBundle\Entity\Repository\CategoryRepository;
 use Catalog\ContentBundle\Form\ContentMetaType;
+use Catalog\ContentBundle\Form\ContentParametersType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Admingenerated\CatalogContentBundle\Form\BaseContentType\NewType as BaseNewType;
 use Catalog\CatalogBundle\Entity\Repository\CatalogRepository;
@@ -169,8 +170,9 @@ class NewType extends BaseNewType {
                 return $er->getListFiles();
             },
         ));
+        $data = $builder->getData();
         $builder->add('sale', new ContentSaleType());
-        $builder->add('more', new MoreFieldType($builder->getData()));
+        $builder->add('more', new MoreFieldType($data));
         $builder->add('meta', new ContentMetaType());
         $builder->add('category', 'entity', array(
             'class' => 'CatalogCategoryBundle:Category',
@@ -179,6 +181,9 @@ class NewType extends BaseNewType {
                 return $er->getListCategory();
             },
         ));
+        if($data->getCategory()){
+            $builder->add('group_parameters', new ContentParametersType($data));
+        }
     }
 
 }

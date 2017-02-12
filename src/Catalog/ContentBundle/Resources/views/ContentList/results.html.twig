@@ -50,8 +50,9 @@
                 {% endif %}
             </span>
         </th>
-
-
+        <th class="list_thead_column">
+            {{ 'Category'|trans({}, 'Admin') }}
+        </th>
         <th class="list_thead_column{% if 1 %} sortable{% if sortColumn == 'is_active' and sortOrder == 'ASC' %} sort_asc{% elseif sortColumn == 'is_active' and sortOrder == 'DESC' %} sort_desc{% endif %}{% endif %}">
             <span class="sort-span">
             {% if sortColumn == 'is_active' and sortOrder == 'ASC' %}

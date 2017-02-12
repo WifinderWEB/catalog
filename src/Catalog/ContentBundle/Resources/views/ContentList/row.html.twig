@@ -12,6 +12,20 @@
     <td class="td_string td_title">
         {% block list_td_column_title %}{{ Content.title }}{% endblock list_td_column_title %}
     </td>
+    <td class="td_string td_category">
+        {% block list_td_column_category %}
+            {% if(Content.category) %}
+                <div style="border-bottom: 1px dotted #ccc">{{ Content.category.title }}</div>
+                {% if Content.parameters %}
+                    <dl class="dl-horizontal">
+                    {% for one in Content.parameters %}
+                        <dt class="muted" style="line-height: 14px; font-size: 80%">{{ one.group.title }}</dt><dd class="text-info">{{ one.title }}</dd>
+                    {% endfor %}
+                    </dl>
+                {% endif %}
+            {% endif %}
+        {% endblock list_td_column_category %}
+    </td>
     <td class="td_boolean td_is_active">
         {% block list_td_column_is_active %}
             {% if Content.isActive %}

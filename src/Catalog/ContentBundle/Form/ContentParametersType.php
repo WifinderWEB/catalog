@@ -54,7 +54,7 @@ class ContentParametersType extends AbstractType
      */
     public function getName()
     {
-        return 'catalog_contentbundle_contentparameter';
+        return 'group_parameters';
     }
 }
 

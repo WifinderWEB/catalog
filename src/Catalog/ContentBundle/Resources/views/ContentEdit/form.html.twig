@@ -266,7 +266,17 @@
          <div class="row-fluid">
              <div class="control-group form_field field_collection field_group_parameters">
                  {% block form_group_parameters %}
-                     {{ form_row(form['group_parameters']) }}
+                     {% if form['group_parameters'] is defined %}
+                         {{ form_row(form['group_parameters']) }}
+                     {% else %}
+                         <div class="control-group group_parameters">
+                             <label class="control-label required">Group parameters</label>
+                             <div class="controls">
+                                 <div id="edit_content_group_parameters">
+                                 </div>
+                             </div>
+                         </div>
+                     {% endif %}
                  {% endblock form_group_parameters %}
              </div>
          </div>
@@ -277,8 +287,18 @@
                      $.ajax({
                          url: '{{ path('get_group_parameters') }}',
                          data: {id: id},
+                         dataType: 'html',
+                         timeout: 5000,
+                         error: function(err){
+                             console.log(err);
+                         },
                          success: function(mess){
-                            console.log(mess);
+                             var pattern = /group_parameters\[/g;
+                             var str = mess.replace(pattern, 'edit_content[group_parameters][');
+                             str = str.replace(new RegExp('group_parameters_', 'g'), 'edit_content_group_parameters_');
+
+                             $('#edit_content_group_parameters').html(str);
+                             FormAction.multiselect();
                          }
                      })
                  });
